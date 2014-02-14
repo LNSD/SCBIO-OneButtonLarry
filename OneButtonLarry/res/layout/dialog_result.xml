@@ -9,18 +9,18 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        android:padding="5dp"
         android:text="@string/namein_score_dialog"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
     <EditText
         android:id="@+id/scorenameEditText"
-        android:inputType="textCapWords"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10" >
+        android:layout_gravity="center_horizontal"
+        android:ems="5"
+        android:inputType="textCapWords" >
 
         <requestFocus />
     </EditText>
@@ -29,8 +29,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        android:padding="5dp"
         android:text="@string/puntuacion_score_dialog"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
@@ -39,6 +38,7 @@
         android:id="@+id/scoreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom ="5dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/def_puntuacion_score_dialog"
         android:textAlignment="center"

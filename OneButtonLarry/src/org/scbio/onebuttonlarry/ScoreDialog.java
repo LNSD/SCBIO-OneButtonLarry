@@ -43,8 +43,11 @@ public class ScoreDialog extends DialogFragment {
 		// Add action button
 		.setPositiveButton(R.string.submit_score_dialog, new DialogInterface.OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int id) {
+			public void onClick(DialogInterface dialog, int id) 
+			{
 				playerName = playernameEditText.getText();
+				if(playerName.length()==0) playerName = "AAAAA";
+				
 				mListener.onDialogSubmitClick(ScoreDialog.this, playerName, score);
 			}
 		});      

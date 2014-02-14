@@ -86,7 +86,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		//TODO Store score to DB
 		Toast.makeText(
 				getApplicationContext(), 
-				"Puntuación alamcenada = "+player+':'+String.valueOf(score), 
+				"Score stored = "+player+':'+String.valueOf(score), 
 				Toast.LENGTH_SHORT).show();	
 	}
 
