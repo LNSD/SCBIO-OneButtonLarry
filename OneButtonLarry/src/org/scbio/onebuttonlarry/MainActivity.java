@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -16,14 +18,20 @@ public class MainActivity extends Activity {
 	Button buttonAbout;
 	Button buttonHighScore;
 	Button buttonExit;
-	ToggleButton toggleSoundn;
+	ToggleButton toggleSound;
+	ImageView dancingLarry;
+	ImageView waitingLarry;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		buttonPlay = (Button) findViewById(R.id.buttonPlay);		
+		buttonPlay = (Button) findViewById(R.id.buttonPlay);
+		toggleSound = (ToggleButton) findViewById(R.id.toggleSound);
+		dancingLarry = (ImageView) findViewById(R.id.imageDancingLarry);
+		waitingLarry = (ImageView) findViewById(R.id.imageWaitingLarry);
+		
 		buttonPlay.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -32,7 +40,21 @@ public class MainActivity extends Activity {
 				startActivityForResult(gameIntent, 100);
 			}
 		});
+		
+		toggleSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		        if (isChecked) {
+		            dancingLarry.setVisibility(View.VISIBLE);
+		            waitingLarry.setVisibility(View.GONE);
+		        } else {
+		        	waitingLarry.setVisibility(View.VISIBLE);
+		            dancingLarry.setVisibility(View.GONE);
+		        }
+		    }
+		});
 	}
+	
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -45,7 +67,7 @@ public class MainActivity extends Activity {
 					String result = data.getExtras().getString("puntuacion");
 					Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 				}else{
-					Log.e(MainActivity.class.toString(), "Unknown 'resultCode' response: "+requestCode);
+					Log.e(MainActivity.class.toString(), "Unknown 'resultCode' response: "+resultCode);
 				}
 				break;
 

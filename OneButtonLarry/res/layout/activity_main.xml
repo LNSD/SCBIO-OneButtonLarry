@@ -49,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:checked="true"
         android:text="@string/sound" />
 
     <Button
@@ -58,5 +59,25 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="@string/about_us" />
+
+    <ImageView
+        android:id="@+id/imageDancingLarry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/sound"
+        android:src="@drawable/larry_dance_animation"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageWaitingLarry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/sound"
+        android:src="@drawable/larry_waiting_animation"
+        android:visibility="gone" />
 
 </RelativeLayout>
