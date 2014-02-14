@@ -2,19 +2,19 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android" 
     android:oneshot="false">
     
-    <item android:drawable="@drawable/larry_waitingframe0" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe1" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe2" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe3" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe4" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe5" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe6" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe7" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe6" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe5" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe4" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe3" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe2" android:duration="120" />
-    <item android:drawable="@drawable/larry_waitingframe1" android:duration="120" />
+    <item android:drawable="@drawable/larry_waitingframe0" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe1" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe2" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe3" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe4" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe5" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe6" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe7" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe6" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe5" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe4" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe3" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe2" android:duration="100" />
+    <item android:drawable="@drawable/larry_waitingframe1" android:duration="100" />
         
 </animation-list>

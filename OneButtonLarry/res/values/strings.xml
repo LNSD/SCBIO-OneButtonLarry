@@ -11,5 +11,12 @@
     <string name="title_activity_high_score">Your High Score is:</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_game">GameActivity</string>
+    
+    <!-- Score dialog -->
+    <string name="title_score_dialog">Tu puntuación:</string>
+    <string name="namein_score_dialog">Introduce tu nombre:</string>
+    <string name="puntuacion_score_dialog">Tu puntuación:</string>
+    <string name="def_puntuacion_score_dialog">0000</string>
+    <string name="submit_score_dialog">Submit</string>
 
 </resources>
