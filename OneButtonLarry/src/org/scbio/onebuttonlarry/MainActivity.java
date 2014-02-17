@@ -30,6 +30,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 
 		buttonPlay = (Button) findViewById(R.id.buttonPlay);
 		buttonHighScore = (Button) findViewById(R.id.buttonHighScore);
+		buttonExit = (Button) findViewById(R.id.buttonExit);
 		
 		toggleSound = (ToggleButton) findViewById(R.id.toggleSound);
 		dancingLarry = (ImageView) findViewById(R.id.imageDancingLarry);
@@ -41,6 +42,15 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 			public void onClick(View v) {
 				Intent gameIntent = new Intent(getBaseContext(), GameActivity.class);
 				startActivityForResult(gameIntent, 100);
+			}
+		});
+
+		buttonExit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				setResult(RESULT_OK);
+				finish();
 			}
 		});
 		
@@ -90,7 +100,10 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 				Toast.LENGTH_SHORT).show();	
 	}
 
-
+	public void startAboutUs(View view){
+		Intent aboutUs = new Intent(this, AboutActivity.class);
+		startActivity(aboutUs);
+	}
 
 }
 
