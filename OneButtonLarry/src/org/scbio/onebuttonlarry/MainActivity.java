@@ -6,7 +6,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -15,10 +14,6 @@ import android.widget.ToggleButton;
 
 public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreDialogListener {
 
-	Button buttonPlay;
-	Button buttonAbout;
-	Button buttonHighScore;
-	Button buttonExit;
 	ToggleButton toggleSound;
 	ImageView dancingLarry;
 	ImageView waitingLarry;
@@ -28,31 +23,9 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		buttonPlay = (Button) findViewById(R.id.buttonPlay);
-		buttonHighScore = (Button) findViewById(R.id.buttonHighScore);
-		buttonExit = (Button) findViewById(R.id.buttonExit);
-		
 		toggleSound = (ToggleButton) findViewById(R.id.toggleSound);
 		dancingLarry = (ImageView) findViewById(R.id.imageDancingLarry);
 		waitingLarry = (ImageView) findViewById(R.id.imageWaitingLarry);
-
-		buttonPlay.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent gameIntent = new Intent(getBaseContext(), GameActivity.class);
-				startActivityForResult(gameIntent, 100);
-			}
-		});
-
-		buttonExit.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
 		
 		toggleSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -100,9 +73,19 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 				Toast.LENGTH_SHORT).show();	
 	}
 
+	public void onClickGame(View v) {
+		Intent gameIntent = new Intent(getBaseContext(), GameActivity.class);
+		startActivityForResult(gameIntent, 100);
+	}
+	
 	public void startAboutUs(View view){
 		Intent aboutUs = new Intent(this, AboutActivity.class);
 		startActivity(aboutUs);
+	}
+	
+	public void onClickExit(View view){
+		setResult(RESULT_OK);
+		finish();
 	}
 
 }
