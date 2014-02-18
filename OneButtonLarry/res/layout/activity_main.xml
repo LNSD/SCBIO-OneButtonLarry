@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:background="@drawable/background"
     tools:context=".MainActivity" >
 
     <ToggleButton
@@ -12,6 +12,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:checked="true"
+        android:layout_margin="10dp"
         android:text="@string/sound" />
 
     <ImageView
@@ -22,6 +23,7 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/sound"
         android:src="@drawable/larry_waiting_animation"
+        android:layout_margin="10dp"
         android:visibility="gone" />
 
     <ImageView
@@ -32,6 +34,7 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/sound"
         android:src="@drawable/larry_dance_animation"
+        android:layout_margin="10dp"
         android:visibility="visible" />
 
     <ImageView
@@ -44,6 +47,7 @@
         android:contentDescription="@string/sound"
         android:maxHeight="130dp"
         android:maxWidth="130dp"
+        android:layout_margin="10dp"
         android:src="@drawable/onebuttonlarry_title" />
 
     <LinearLayout
@@ -52,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
         android:orientation="vertical" >
 
         <Button
@@ -59,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="startAboutUs"
+            android:layout_margin="10dp"
             android:text="@string/about_us" />
 
         <Button
@@ -66,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClickExit"
+            android:layout_margin="10dp"
             android:text="@string/exit" />
     </LinearLayout>
 
@@ -75,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
         android:orientation="vertical" >
 
         <Button
@@ -82,12 +90,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClickGame"
+            android:layout_margin="10dp"
             android:text="@string/play" />
 
         <Button
             android:id="@+id/buttonHighScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="@string/high_score" />
     </LinearLayout>
 

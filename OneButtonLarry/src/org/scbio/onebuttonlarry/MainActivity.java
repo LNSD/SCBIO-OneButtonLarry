@@ -1,12 +1,12 @@
 package org.scbio.onebuttonlarry;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,6 +17,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 	ToggleButton toggleSound;
 	ImageView dancingLarry;
 	ImageView waitingLarry;
+	MediaPlayer mediaPlayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +27,24 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		toggleSound = (ToggleButton) findViewById(R.id.toggleSound);
 		dancingLarry = (ImageView) findViewById(R.id.imageDancingLarry);
 		waitingLarry = (ImageView) findViewById(R.id.imageWaitingLarry);
+		mediaPlayer = MediaPlayer.create(this,R.raw.gamemusic);
+		mediaPlayer.setLooping(true);
+		mediaPlayer.setVolume(100,100);
+		mediaPlayer.start();
 		
 		toggleSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					dancingLarry.setVisibility(View.VISIBLE);
 					waitingLarry.setVisibility(View.GONE);
+					mediaPlayer.prepareAsync();
+					mediaPlayer.seekTo(0);
+					mediaPlayer.start();
+				  
 				} else {
 					waitingLarry.setVisibility(View.VISIBLE);
 					dancingLarry.setVisibility(View.GONE);
+					mediaPlayer.stop();
 				}
 			}
 		});
@@ -85,6 +95,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 	
 	public void onClickExit(View view){
 		setResult(RESULT_OK);
+		mediaPlayer.release();
 		finish();
 	}
 
