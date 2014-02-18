@@ -28,28 +28,60 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		dancingLarry = (ImageView) findViewById(R.id.imageDancingLarry);
 		waitingLarry = (ImageView) findViewById(R.id.imageWaitingLarry);
 		mediaPlayer = MediaPlayer.create(this,R.raw.gamemusic);
-		mediaPlayer.setLooping(true);
-		mediaPlayer.setVolume(100,100);
-		mediaPlayer.start();
+
+		setUpMediaPlayerandLarry();
 		
 		toggleSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {       
 				if (isChecked) {
-					dancingLarry.setVisibility(View.VISIBLE);
-					waitingLarry.setVisibility(View.GONE);
-					mediaPlayer.prepareAsync();
-					mediaPlayer.seekTo(0);
-					mediaPlayer.start();
-				  
+					startLarryAndMusic();
 				} else {
-					waitingLarry.setVisibility(View.VISIBLE);
-					dancingLarry.setVisibility(View.GONE);
-					mediaPlayer.stop();
+					stopLarryAndMusic();
 				}
 			}
 		});
 	}
-
+	
+	
+	/*
+	 * Animation and MediaPlayer methods. 
+	 */
+	
+	private void setUpMediaPlayerandLarry() {
+		dancingLarry.setVisibility(View.VISIBLE); 
+		waitingLarry.setVisibility(View.GONE);
+		
+		mediaPlayer.setLooping(true);
+		mediaPlayer.start();
+	}
+	
+	private void startLarryAndMusic() {
+		dancingLarry.setVisibility(View.VISIBLE); 
+		waitingLarry.setVisibility(View.GONE);       
+		
+		mediaPlayer.seekTo(0);                 
+		mediaPlayer.start();
+	}
+	
+	private void stopLarryAndMusic() {
+		waitingLarry.setVisibility(View.VISIBLE);
+		dancingLarry.setVisibility(View.GONE);
+		
+		if(mediaPlayer.isPlaying())
+					mediaPlayer.pause();
+	}
+	
+	private void finishMusic(){
+		mediaPlayer.setLooping(false);
+		mediaPlayer.stop();
+		mediaPlayer.release();
+	}
+	
+	@Override
+	protected void onStop() {
+		finishMusic();
+		super.onStop();
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -73,7 +105,6 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 
 	}
 
-
 	@Override
 	public void onDialogSubmitClick(DialogFragment dialog, CharSequence player, long score) {
 		//TODO Store score to DB
@@ -87,7 +118,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		Intent gameIntent = new Intent(getBaseContext(), GameActivity.class);
 		startActivityForResult(gameIntent, 100);
 	}
-	
+
 	public void startAboutUs(View view){
 		Intent aboutUs = new Intent(this, AboutActivity.class);
 		startActivity(aboutUs);
