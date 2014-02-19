@@ -30,53 +30,53 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		mediaPlayer = MediaPlayer.create(this,R.raw.gamemusic);
 
 		setUpMediaPlayerandLarry();
-		
+
 		toggleSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {       
-				if (isChecked) {
+				if (isChecked){
 					startLarryAndMusic();
-				} else {
+				}else{
 					stopLarryAndMusic();
 				}
 			}
 		});
 	}
-	
-	
+
+
 	/*
 	 * Animation and MediaPlayer methods. 
 	 */
-	
+
 	private void setUpMediaPlayerandLarry() {
 		dancingLarry.setVisibility(View.VISIBLE); 
 		waitingLarry.setVisibility(View.GONE);
-		
+
 		mediaPlayer.setLooping(true);
 		mediaPlayer.start();
 	}
-	
+
 	private void startLarryAndMusic() {
 		dancingLarry.setVisibility(View.VISIBLE); 
 		waitingLarry.setVisibility(View.GONE);       
-		
+
 		mediaPlayer.seekTo(0);                 
 		mediaPlayer.start();
 	}
-	
+
 	private void stopLarryAndMusic() {
 		waitingLarry.setVisibility(View.VISIBLE);
 		dancingLarry.setVisibility(View.GONE);
-		
-		if(mediaPlayer.isPlaying())
-					mediaPlayer.pause();
+
+		if(mediaPlayer.isPlaying()) mediaPlayer.pause();
 	}
-	
+
 	private void finishMusic(){
 		mediaPlayer.setLooping(false);
 		mediaPlayer.stop();
+		mediaPlayer.reset();
 		mediaPlayer.release();
 	}
-	
+
 	@Override
 	protected void onStop() {
 		finishMusic();
@@ -92,7 +92,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 				ScoreDialog mScoreDialog= new ScoreDialog();
 				mScoreDialog.setScore(data.getExtras().getLong("puntuacion"));
 				mScoreDialog.show(getSupportFragmentManager(), "score");
-				
+
 			}else{
 				Log.e(MainActivity.class.toString(), "Unknown 'resultCode' response: "+resultCode);
 			}
@@ -123,10 +123,9 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		Intent aboutUs = new Intent(this, AboutActivity.class);
 		startActivity(aboutUs);
 	}
-	
+
 	public void onClickExit(View view){
 		setResult(RESULT_OK);
-		mediaPlayer.release();
 		finish();
 	}
 
