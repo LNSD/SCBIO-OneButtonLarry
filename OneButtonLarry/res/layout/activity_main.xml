@@ -2,83 +2,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background2"
     tools:context=".MainActivity" >
-
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/app_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Button
-        android:id="@+id/buttonPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
-        android:text="@string/play" />
-
-    <Button
-        android:id="@+id/buttonExit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="21dp"
-        android:text="@string/exit" />
-
-    <Button
-        android:id="@+id/buttonHighScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="@string/high_score" />
-
-    <ToggleButton
-        android:id="@+id/toggleSound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:checked="true"
-        android:text="@string/sound" />
-
-    <Button
-        android:id="@+id/buttonAbout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:onClick="startAboutUs"
-        android:text="@string/about_us" />
-
-    <ImageView
-        android:id="@+id/imageDancingLarry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/sound"
-        android:src="@drawable/larry_dance_animation"
-        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/imageWaitingLarry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
         android:contentDescription="@string/sound"
         android:src="@drawable/larry_waiting_animation"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageDancingLarry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/sound"
+        android:src="@drawable/larry_dance_animation"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/titleImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/sound"
+        android:maxHeight="130dp"
+        android:maxWidth="130dp"
+        android:src="@drawable/onebuttonlarry_title" />
+
+    <LinearLayout
+        android:id="@+id/linearRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/buttonHighScore"
+            android:layout_width="65dp"
+            android:layout_height="55dp"
+            android:onClick="onClickHighscore"
+            android:background="@drawable/button_high_score" />
+
+        <Button
+            android:id="@+id/buttonExit"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:onClick="onClickExit"
+            android:background="@drawable/button_exit" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/buttonPlay"
+            android:layout_width="173dp"
+            android:layout_height="130dp"
+            android:background="@drawable/button_play"
+            android:onClick="onClickGame" />
+
+    </LinearLayout>
+
+    <ToggleButton
+        android:id="@+id/toggleSound"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignRight="@+id/titleImageView"
+        android:layout_alignTop="@+id/titleImageView"
+        android:layout_margin="10dp"
+        android:background="@drawable/toggle_button_sound"
+        android:checked="true"
+        android:textOff=""
+        android:textOn="" />
 
 </RelativeLayout>
