@@ -195,6 +195,6 @@
     <item android:drawable="@drawable/larry_frame190" android:duration="30" />
     <item android:drawable="@drawable/larry_frame191" android:duration="30" />
     <item android:drawable="@drawable/larry_frame192" android:duration="30" />
-    <item android:drawable="@drawable/larry_frame193" android:duration="30" />
+
         
 </animation-list>

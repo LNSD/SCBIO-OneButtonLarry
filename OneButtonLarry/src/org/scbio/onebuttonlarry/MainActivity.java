@@ -139,4 +139,3 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 	}
 
 }
-
