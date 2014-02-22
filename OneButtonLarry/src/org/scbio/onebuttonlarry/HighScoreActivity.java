@@ -15,21 +15,24 @@ public class HighscoreActivity extends ListActivity {
 
 	private static LayoutInflater inflater = null;
 	private ArrayList<Highscore> mList;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mList = HighscoreManager.loadHighscores(getBaseContext());
-
-		this.setListAdapter(new BaseAdapter() {
+		
+		setListAdapter(new HighscoreListAdapter());
+	}
+	
+	private class HighscoreListAdapter extends BaseAdapter{
 			
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View vi=convertView;
 				if(convertView==null)
-					vi = inflater.inflate(R.layout.highscore_row, null);
+					vi = inflater.inflate(R.layout.row_highscore, null);
 
 				TextView player = (TextView) vi.findViewById(R.id.rowplayerTextView);
 				TextView score = (TextView) vi.findViewById(R.id.rowscoreTextView);				
@@ -55,9 +58,7 @@ public class HighscoreActivity extends ListActivity {
 			public int getCount() {
 				return mList.size();
 			}
-		});
 	}
-
 
 
 }

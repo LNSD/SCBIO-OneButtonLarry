@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,6 +15,8 @@ import android.widget.ToggleButton;
 
 public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreDialogListener {
 
+	private static final String TAG = "MainActivity";
+	
 	ToggleButton toggleSound;
 	ImageView dancingLarry;
 	ImageView waitingLarry;
@@ -22,6 +25,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_main);
 
 		toggleSound = (ToggleButton) findViewById(R.id.toggleSound);
@@ -57,16 +61,16 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		case 100:
 			if (resultCode==RESULT_OK) 
 			{
-				ScoreDialog mScoreDialog= new ScoreDialog();
-				mScoreDialog.setScore(data.getExtras().getLong("puntuacion"));
+				ScoreDialog mScoreDialog = new ScoreDialog();
+				mScoreDialog.setScore(data.getExtras().getLong("score"));
 				mScoreDialog.show(getSupportFragmentManager(), "score");
 			}else{
-				Log.e(MainActivity.class.toString(), "Unknown 'resultCode' response: "+resultCode);
+				Log.e(TAG, "Unknown 'resultCode' response: "+resultCode);
 			}
 			break;
 
 		default:
-			Log.e(MainActivity.class.toString(), "Unknown 'requestCode' response: "+requestCode);
+			Log.e(TAG, "Unknown 'requestCode' response: "+requestCode);
 			break;
 		}		
 	}
@@ -78,25 +82,23 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 	}
 
 	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-
-	@Override
 	protected void onStart() {
 		super.onStart();
 		MusicManager.start(getApplicationContext(), R.raw.gamemusic);
 	}
 
 	@Override
-	public void onDialogSubmitClick(DialogFragment dialog, CharSequence player, long score) {
-		//TODO Store score
-		Toast.makeText(
-				getApplicationContext(), 
-				"Score stored = "+player+':'+String.valueOf(score), 
-				Toast.LENGTH_SHORT).show();
-		
-		HighscoreManager.updateHighscores(getBaseContext(), new Highscore(player.toString(), score));
+	protected void onDestroy() {
+		super.onDestroy();
+		MusicManager.release();
+	}
+
+	@Override
+	public void onDialogSubmitClick(DialogFragment dialog, CharSequence player, long score) 
+	{
+		if(HighscoreManager.updateHighscores(getBaseContext(), new Highscore(player.toString(), score))){
+			Log.i(TAG, "Highscore stored successfully. Player:"+player.toString()+"/Score:"+score);
+		}
 	}
 
 	public void onClickGame(View v) {

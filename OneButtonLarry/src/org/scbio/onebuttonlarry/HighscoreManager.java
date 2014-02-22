@@ -10,29 +10,28 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class HighscoreManager {
 	
 	private static final String TAG = HighscoreManager.class.toString();
 	
-	public static void updateHighscores(Context context, Highscore highscore){
+	public static boolean updateHighscores(Context context, Highscore highscore){
 		ArrayList<Highscore> list = loadHighscores(context);
 		list.add(highscore);
-		storeHighscore(context, list);
+		return storeHighscore(context, list);
 	}
 	
-	public static void storeHighscore(Context context, ArrayList<Highscore> list){
+	public static boolean storeHighscore(Context context, ArrayList<Highscore> list){
 		SharedPreferences mSharedPreferences = context.getSharedPreferences("highscores", Context.MODE_PRIVATE);
 		SharedPreferences.Editor prefEditor = mSharedPreferences.edit();
 		
 		prefEditor.putString("highscores", parseHighscoreArray(list));
-		prefEditor.commit();
+		return prefEditor.commit();
 	}
 	
 	public static ArrayList<Highscore> loadHighscores(Context context){
-		SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences mSharedPreferences = context.getSharedPreferences("highscores", Context.MODE_PRIVATE);
 		return parseHighscoreJSON(mSharedPreferences.getString("highscores", ""));
 	}
 	
@@ -44,7 +43,7 @@ public class HighscoreManager {
 		try {
 			scores = new JSONObject(jsonStr);
 			JSONArray list = scores.getJSONArray("highscores");
-			for (int i=0; (i<5)&(i<scores.length()); i++) {
+			for (int i=0; i<list.length(); i++) {
 				JSONObject player = list.getJSONObject(i);
 				String name = player.getString("player");
 				long score = player.getInt("score");
