@@ -27,40 +27,39 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		toggleSound = (ToggleButton) findViewById(R.id.toggleSound);
 		dancingLarry = (ImageView) findViewById(R.id.imageDancingLarry);
 		waitingLarry = (ImageView) findViewById(R.id.imageWaitingLarry);
-		mediaPlayer = MediaPlayer.create(this,R.raw.gamemusic);
-		mediaPlayer.setLooping(true);
-		mediaPlayer.setVolume(100,100);
-		mediaPlayer.start();
-		
+
 		toggleSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					dancingLarry.setVisibility(View.VISIBLE);
-					waitingLarry.setVisibility(View.GONE);
-					mediaPlayer.prepareAsync();
-					mediaPlayer.seekTo(0);
-					mediaPlayer.start();
-				  
-				} else {
-					waitingLarry.setVisibility(View.VISIBLE);
-					dancingLarry.setVisibility(View.GONE);
-					mediaPlayer.stop();
-				}
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
+			{
+				swapLarryAnimation(isChecked);
+				if(isChecked)
+					MusicManager.resume();
+				else
+					MusicManager.pause();
 			}
 		});
 	}
 
+	private void swapLarryAnimation(boolean state) {
+		if (state) {
+			dancingLarry.setVisibility(View.VISIBLE);
+			waitingLarry.setVisibility(View.GONE);
+		} else {
+			waitingLarry.setVisibility(View.VISIBLE);
+			dancingLarry.setVisibility(View.GONE);
+		}
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
 		case 100:
-			if (resultCode==RESULT_OK) {
+			if (resultCode==RESULT_OK) 
+			{
 				ScoreDialog mScoreDialog= new ScoreDialog();
 				mScoreDialog.setScore(data.getExtras().getLong("puntuacion"));
 				mScoreDialog.show(getSupportFragmentManager(), "score");
-				
 			}else{
 				Log.e(MainActivity.class.toString(), "Unknown 'resultCode' response: "+resultCode);
 			}
@@ -70,9 +69,24 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 			Log.e(MainActivity.class.toString(), "Unknown 'requestCode' response: "+requestCode);
 			break;
 		}		
-
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		swapLarryAnimation(toggleSound.isChecked());
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		MusicManager.start(getApplicationContext(), R.raw.gamemusic);
+	}
 
 	@Override
 	public void onDialogSubmitClick(DialogFragment dialog, CharSequence player, long score) {
@@ -87,15 +101,15 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		Intent gameIntent = new Intent(getBaseContext(), GameActivity.class);
 		startActivityForResult(gameIntent, 100);
 	}
-	
+
 	public void startAboutUs(View view){
 		Intent aboutUs = new Intent(this, AboutActivity.class);
 		startActivity(aboutUs);
 	}
-	
+
 	public void onClickExit(View view){
 		setResult(RESULT_OK);
-		mediaPlayer.release();
+		MusicManager.release();
 		finish();
 	}
 
