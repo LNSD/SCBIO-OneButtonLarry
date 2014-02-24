@@ -26,6 +26,13 @@ public class HighscoreActivity extends ListActivity {
 		setListAdapter(new HighscoreListAdapter());
 	}
 	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MusicManager.resume();
+	}
+	
 	private class HighscoreListAdapter extends BaseAdapter{
 			
 			@Override

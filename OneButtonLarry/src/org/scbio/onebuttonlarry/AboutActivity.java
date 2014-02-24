@@ -11,4 +11,10 @@ public class AboutActivity extends Activity {
 		setContentView(R.layout.activity_about);
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MusicManager.resume();
+	}
+
 }

@@ -35,10 +35,11 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
 			{
 				swapLarryAnimation(isChecked);
+				PreferencesManager.storeMusicPreference(getBaseContext(), isChecked);
 				if(isChecked)
-					MusicManager.resume();
+					MusicManager.start(getApplicationContext(), R.raw.gamemusic);
 				else
-					MusicManager.pause();
+					MusicManager.release();
 			}
 		});
 	}
@@ -67,7 +68,6 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 				Log.e(TAG, "Unknown 'resultCode' response: "+resultCode);
 			}
 			break;
-
 		default:
 			Log.e(TAG, "Unknown 'requestCode' response: "+requestCode);
 			break;
@@ -75,15 +75,27 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 	}
 	
 	@Override
-	protected void onResume() {
-		super.onResume();
-		swapLarryAnimation(toggleSound.isChecked());
+	protected void onStart() {
+		super.onStart();
+		
+		boolean musicState = PreferencesManager.loadMusicPreference(getBaseContext());
+		if(musicState)
+			MusicManager.start(getApplicationContext(), R.raw.gamemusic);
+		
+		toggleSound.setChecked(musicState);
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		MusicManager.start(getApplicationContext(), R.raw.gamemusic);
+	protected void onResume() {
+		super.onResume();
+		swapLarryAnimation(toggleSound.isChecked());
+		MusicManager.resume();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MusicManager.pause();
 	}
 
 	@Override
@@ -114,11 +126,9 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		Intent highScore = new Intent(this, HighscoreActivity.class);
 		startActivity(highScore);
 	}
-	
 
 	public void onClickExit(View view){
 		setResult(RESULT_OK);
-		MusicManager.release();
 		finish();
 	}
 

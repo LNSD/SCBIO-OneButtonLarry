@@ -16,9 +16,16 @@ public class GameActivity extends Activity {
 		setContentView(R.layout.activity_game);
 		
 		gameView = (GameView) findViewById(R.id.GameView);
-		gameView.setPadre(this);		
+		gameView.setParent(this);		
 	}
 
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MusicManager.resume();
+	}
+	
 	@Override
 	public void onBackPressed() {
 		

@@ -7,7 +7,7 @@ import android.util.Log;
 public class MusicManager {
 	private static final String TAG = "MusicManager";
 	private static MediaPlayer mPlayer;
-
+	
 	public static void start(Context context, int resid) 
 	{
 		if (mPlayer != null) return;
