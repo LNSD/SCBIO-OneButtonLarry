@@ -18,7 +18,7 @@ public class GameActivity extends Activity {
 	public void onBackPressed() {
 		
 		Intent returnIntent = new Intent();
-		returnIntent.putExtra("score", 1223l); //TODO Test code
+		returnIntent.putExtra("score", 222l); //TODO Test code
 		setResult(RESULT_OK, returnIntent);
 		finish();
 		super.onBackPressed();

@@ -60,9 +60,9 @@ public class HighscoreManager {
 
 	public static String parseHighscoreArray(ArrayList<Highscore> list){
 		
-		Collections.sort(list, new Comparator<Highscore>() {
+		Collections.sort(list, new Comparator<Highscore>() { // Sort rising values.
 			public int compare(Highscore o1, Highscore o2){
-				if(o1.getScore()== o2.getScore())
+				if(o1.getScore() == o2.getScore())
 					return 0;
 				return o1.getScore() < o2.getScore() ? -1 : 1;
 			}
