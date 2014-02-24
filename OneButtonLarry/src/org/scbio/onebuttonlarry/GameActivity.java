@@ -7,11 +7,16 @@ import android.view.WindowManager;
 
 public class GameActivity extends Activity {
 
+	private GameView gameView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_game);
+		
+		gameView = (GameView) findViewById(R.id.GameView);
+		gameView.setPadre(this);		
 	}
 
 	@Override
