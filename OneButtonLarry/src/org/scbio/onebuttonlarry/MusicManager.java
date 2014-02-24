@@ -21,7 +21,7 @@ public class MusicManager {
 				mPlayer.setLooping(true);
 				mPlayer.start();
 			} catch (Exception e) {
-				Log.e(TAG, e.getMessage(), e);
+				Log.e(TAG, "MediaPlayer chrashed @ start()", e);
 			}
 		}
 
@@ -31,13 +31,12 @@ public class MusicManager {
 	public static void pause() 
 	{
 		if(mPlayer == null) return;
-		if(!mPlayer.isPlaying()) return;
 
 		try {
+			if(!mPlayer.isPlaying()) return;
 			mPlayer.pause();
 		} catch (Exception e) {
 			Log.e(TAG, "MediaPlayer chrashed @ pause()", e);
-			Log.e(TAG, e.getMessage(), e);
 		}	
 
 	}
@@ -45,13 +44,12 @@ public class MusicManager {
 	public static void resume() 
 	{
 		if(mPlayer == null) return;
-		if(mPlayer.isPlaying()) return;
 
 		try {
+			if(mPlayer.isPlaying()) return;
 			mPlayer.start();
 		} catch (Exception e) {
 			Log.e(TAG, "MediaPlayer chrashed @ resume()", e);
-			Log.e(TAG, e.getMessage(), e);
 		}	
 	}
 
@@ -59,16 +57,16 @@ public class MusicManager {
 	{
 		if (mPlayer == null) return;
 		try {
-				if (mPlayer.isPlaying()) 
-				{
+				if(mPlayer.isPlaying()) 
+				{	
 					mPlayer.stop();
 				}
 				mPlayer.reset();
 				mPlayer.release();
+				mPlayer = null;
 			
 		} catch (Exception e) {
 			Log.e(TAG, "MediaPlayer crashed @ release()", e);
-			Log.e(TAG, e.getMessage(), e);
 		}
 	}
 }
