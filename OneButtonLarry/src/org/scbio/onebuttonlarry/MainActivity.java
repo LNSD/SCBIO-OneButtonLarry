@@ -105,7 +105,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		startActivityForResult(gameIntent, 100);
 	}
 
-	public void startAboutUs(View view){
+	public void onClickAboutUs(View view){
 		Intent aboutUs = new Intent(this, AboutActivity.class);
 		startActivity(aboutUs);
 	}
