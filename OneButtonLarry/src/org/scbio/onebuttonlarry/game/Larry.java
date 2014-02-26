@@ -38,5 +38,5 @@ public abstract class Larry extends Sprite {
 		larryFrame4 = context.getResources().getDrawable(R.drawable.larry4);
 	}
 	
-	public abstract void doAction();
+	protected abstract void doAction();
 }

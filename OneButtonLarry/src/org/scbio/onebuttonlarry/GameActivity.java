@@ -1,5 +1,7 @@
 package org.scbio.onebuttonlarry;
 
+import org.scbio.onebuttonlarry.game.GameStage;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +9,7 @@ import android.view.WindowManager;
 
 public class GameActivity extends Activity {
 
-	private GameView gameView;
+	private GameStage currentStage;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -15,8 +17,8 @@ public class GameActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_game);
 		
-		gameView = (GameView) findViewById(R.id.GameView);
-		gameView.setParent(this);		
+		currentStage = (GameStage) findViewById(R.id.GameView);
+		currentStage.setParent(this);		
 	}
 
 
