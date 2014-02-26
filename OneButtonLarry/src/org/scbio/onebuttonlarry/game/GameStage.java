@@ -15,6 +15,9 @@ public abstract class GameStage extends View {
 	private Activity parent;
 	private GameThread thread;
 	private Drawable background;
+	
+	private OnGamePauseListener onGamePauseListener;
+	private OnStageFinishListener onStageFinishListener;
 
 	public GameStage(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -111,20 +114,44 @@ public abstract class GameStage extends View {
 
 	public void pauseGame(){
 		this.thread.pauseGameThread();
-		onPauseGame();
+		this.onGamePauseListener.onPause();
 	}
 
 	public void finishGame(){
 		this.thread.finishGameThread();
+		this.onStageFinishListener.onFinish();
 	}
 
 	/**
-	 * Callback method. Called when game is paused.
+	 * Callback interface.
+	 * Called when game is paused.
 	 */
-	protected abstract void onPauseGame();
+	public interface OnGamePauseListener{
+		public void onPause();
+	}
 	
+	public void setOnGamePauseListener(OnGamePauseListener onGamePauseListener) {
+		this.onGamePauseListener = onGamePauseListener;
+	}
+
+	public OnGamePauseListener getOnGamePauseListener() {
+		return onGamePauseListener;
+	}
+
 	/**
-	 * Callback method. Called when game finishes.
+	 * Callback method.
+	 * Called when game finishes.
 	 */
-	protected abstract void onFinishGame();
+	public interface OnStageFinishListener{
+		public void onFinish();
+	}
+
+	public void setOnStageFinishListener(OnStageFinishListener onStageFinishListener) {
+		this.onStageFinishListener = onStageFinishListener;
+	}
+
+	public OnStageFinishListener getOnStageFinishListener() {
+		return onStageFinishListener;
+	}
+	
 }
