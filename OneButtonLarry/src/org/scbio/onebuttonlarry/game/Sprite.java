@@ -1,4 +1,4 @@
-package org.scbio.onebuttonlarry;
+package org.scbio.onebuttonlarry.game;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
