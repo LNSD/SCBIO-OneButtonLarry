@@ -2,8 +2,8 @@ package org.scbio.onebuttonlarry.game;
 
 import java.util.HashMap;
 
-import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
+import org.scbio.onebuttonlarry.stage.GapJump;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,8 +19,7 @@ public class GameView extends View implements OnStageFinishListener{
 	private Activity parent;
 	private GameThread thread = new GameThread();
 
-	private GameStage currentStage;
-	
+	private GameStage currentStage = new GapJump(getContext(), this);;
 	private GameStage nextStage;
 	private OnGameListener onGameListener;
 
