@@ -2,14 +2,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_game6"
     tools:context=".GameActivity" >
 
-    <org.scbio.onebuttonlarry.GameView
+    <org.scbio.onebuttonlarry.game.GameView
         android:id="@+id/GameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" />
+
+    <ImageView
+        android:id="@+id/bigResumeIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/dummy_string"
+        android:maxHeight="180dp"
+        android:maxWidth="180dp"
+        android:src="@drawable/play"
+        android:onClick="onClickResume"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/buttonPause"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/pause"
+        android:onClick="onClickPause"
+        android:text="" />
 
 </RelativeLayout>
