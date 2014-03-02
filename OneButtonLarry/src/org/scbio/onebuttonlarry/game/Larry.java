@@ -28,7 +28,7 @@ public abstract class Larry extends Sprite {
 		larryFrame3 = context.getResources().getDrawable(LARRY_FRAME_3);
 		larryFrame4 = context.getResources().getDrawable(LARRY_FRAME_4);
 		
-		this.setDrawable(larryFrame1);
+		setDrawable(larryFrame1);
 	}
 	
 	public Larry(Context context, View view){	
@@ -39,7 +39,7 @@ public abstract class Larry extends Sprite {
 		larryFrame3 = context.getResources().getDrawable(LARRY_FRAME_3);
 		larryFrame4 = context.getResources().getDrawable(LARRY_FRAME_4);
 		
-		this.setDrawable(larryFrame1);
+		setDrawable(larryFrame1);
 	}
 	
 	protected abstract void doAction();

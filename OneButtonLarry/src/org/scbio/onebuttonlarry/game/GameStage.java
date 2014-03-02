@@ -1,5 +1,6 @@
 package org.scbio.onebuttonlarry.game;
 
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
@@ -36,6 +37,11 @@ public abstract class GameStage {
 	 */
 	protected abstract void updatePhysics(double delay);
 	
+	public abstract void onDrawStage(Canvas canvas);
+	
+	public abstract void onSizeChanged(int w, int h, int oldw, int oldh);
+	
+	
 	/**
 	 * Callback method.
 	 * Called when game finishes.
@@ -51,7 +57,5 @@ public abstract class GameStage {
 	public OnStageFinishListener getOnStageFinishListener() {
 		return onStageFinishListener;
 	}
-	
-	
-	
+
 }

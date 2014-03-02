@@ -7,6 +7,7 @@ import org.scbio.onebuttonlarry.stage.GapJump;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -43,6 +44,24 @@ public class GameView extends View implements OnStageFinishListener{
 	 */
 	public void setParent(Activity parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) 
+	{
+		if(currentStage != null)
+			this.currentStage.onDrawStage(canvas);
+		
+		super.onDraw(canvas);
+	}
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) 
+	{
+		if(currentStage != null)
+			this.currentStage.onSizeChanged(w,h,oldw,oldh);
+		
+		super.onSizeChanged(w, h, oldw, oldh);
 	}
 
 	/*
