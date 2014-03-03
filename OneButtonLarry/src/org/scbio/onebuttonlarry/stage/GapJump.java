@@ -14,6 +14,12 @@ public class GapJump extends GameStage {
 	 * Stage map constants.
 	 */
 	private static final float Y_GROUND = 0.612f;
+	
+	/*
+	 * Larry constants.
+	 */
+	
+	private static final int LARRY_SPEED = 7;
 
 	private Context context;
 	private GameView parent;
@@ -35,7 +41,7 @@ public class GapJump extends GameStage {
 		};
 		
 		jumpLarry.setIncY(0);
-		jumpLarry.setIncX(5);
+		jumpLarry.setIncX(LARRY_SPEED);
 
 		this.setStageBackground(R.drawable.stagebg_gapjump);
 	}
@@ -54,6 +60,7 @@ public class GapJump extends GameStage {
 	@Override
 	protected void onTap() {
 		taps++;
+		jumpLarry.setPosY(parent.getHeight()/2);
 	}
 
 	@Override
