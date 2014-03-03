@@ -20,7 +20,7 @@ public class GameView extends View implements OnStageFinishListener{
 	private Activity parent;
 	private GameThread thread = new GameThread();
 
-	private GameStage currentStage = new GapJump(getContext(), this);;
+	private GameStage currentStage = new GapJump(getContext(), this);
 	private GameStage nextStage;
 	private OnGameListener onGameListener;
 
@@ -76,10 +76,10 @@ public class GameView extends View implements OnStageFinishListener{
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		if(!thread.isPaused())
-		{
+		/*if(!thread.isPaused() && event.equals(MotionEvent.ACTION_DOWN))
+		{*/
 			this.currentStage.onTap();
-		}
+		//s}
 		return super.onTouchEvent(event);	
 	}
 

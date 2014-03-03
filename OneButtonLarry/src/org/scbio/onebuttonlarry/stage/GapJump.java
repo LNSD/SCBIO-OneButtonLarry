@@ -15,58 +15,94 @@ public class GapJump extends GameStage {
 	 */
 	private static final float Y_GROUND = 0.612f;
 	
-	/*
-	 * Larry constants.
-	 */
-	
-	private static final int LARRY_SPEED = 7;
-
 	private Context context;
 	private GameView parent;
 
-	private Larry jumpLarry;
+	private JumpLarry larry;
 
 	public GapJump(Context context, GameView parent) {
 		super(parent);	
 		this.context = context;
 		this.parent = parent;
 
-		jumpLarry = new Larry(context, parent, 0.1f) {
-
-			@Override
-			protected void doAction() {
-				// TODO Auto-generated method stub
-
-			}
-		};
+		larry = new JumpLarry(context, parent, 0.1f);
 		
-		jumpLarry.setIncY(0);
-		jumpLarry.setIncX(LARRY_SPEED);
-
+		larry.setIncY(0);
+		larry.setIncX(larry.LARRY_REGSPEED);
+		
 		this.setStageBackground(R.drawable.stagebg_gapjump);
 	}
 
 	@Override
 	public void onDrawStage(Canvas canvas) {
-		jumpLarry.drawSprite(canvas);
+		larry.drawSprite(canvas);
 	}
 
 	@Override
-	public void onSizeChanged(int w, int h, int oldw, int oldh) {
-	
-		jumpLarry.setPosY(Y_GROUND*h);
+	public void onSizeChanged(int w, int h, int oldw, int oldh) {	
+		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
 	}
 
 	@Override
 	protected void onTap() {
 		taps++;
-		jumpLarry.setPosY(parent.getHeight()/2);
+		
+		if(!larry.isJumping()) larry.doAction();
 	}
 
 	@Override
 	protected void updatePhysics(double delay) {
-		jumpLarry.incPos(delay);
-
-		if(jumpLarry.getPosX() > parent.getWidth()-jumpLarry.getWidth()/2) finishStage();
+		if(larry.isJumping()) 
+			larry.setIncY(larry.jump(delay, larry.getIncY()));
+		
+		larry.incPos(delay);
+		if(larry.getPosX() > parent.getWidth()-larry.getWidth()/2) finishStage();
+	}
+	
+	private class JumpLarry extends Larry{
+		public JumpLarry(Context context, View view) {
+			super(context, view);
+		}
+		public JumpLarry(Context context, View view, float scale) {
+			super(context, view, scale);
+		}
+		
+		/*
+		 * Larry constants.
+		 */
+		public static final int LARRY_REGSPEED = 7;
+		public static final int LARRY_JUMPSPEEDX = 15;
+		public static final int LARRY_JUMPSPEEDY = -40;
+		public static final float GRAVITY = 5f;
+		
+		private boolean jump = false;
+		
+		public boolean isJumping(){
+			return jump;
+		}
+		
+		/*
+		 * Larry jump action 
+		 * @see org.scbio.onebuttonlarry.game.Larry#doAction()
+		 */
+		@Override
+		protected void doAction() {
+			jump = true;
+			setIncY(LARRY_JUMPSPEEDY);
+			setIncX(LARRY_JUMPSPEEDX);
+		}
+		
+		public double jump(double t, double vinit)
+		{	
+			if(parent.getHeight()*Y_GROUND+10 < getPosY()){
+				jump = false;
+				setIncX(LARRY_REGSPEED);
+				setPosY(parent.getHeight()*Y_GROUND+10);
+				return 0;
+			}
+			
+			return vinit + GRAVITY*t;
+		}
+		
 	}
 }
