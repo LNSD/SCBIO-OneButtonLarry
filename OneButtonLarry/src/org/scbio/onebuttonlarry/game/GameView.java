@@ -83,10 +83,10 @@ public class GameView extends View implements OnStageFinishListener{
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		/*if(!thread.isPaused() && event.equals(MotionEvent.ACTION_DOWN))
-		{*/
+		if(!thread.isPaused())
+		{
 			this.currentStage.onTap();
-		//s}
+		}
 		return super.onTouchEvent(event);	
 	}
 
