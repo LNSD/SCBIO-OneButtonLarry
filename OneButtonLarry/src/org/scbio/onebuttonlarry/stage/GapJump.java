@@ -7,12 +7,14 @@ import org.scbio.onebuttonlarry.game.Larry;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.View;
 
 public class GapJump extends GameStage {
 
 	/*
 	 * Stage map constants.
 	 */
+	private static final int BG_RES = R.drawable.stagebg_gapjump;
 	private static final float Y_GROUND = 0.612f;
 	
 	private Context context;
@@ -20,26 +22,26 @@ public class GapJump extends GameStage {
 
 	private JumpLarry larry;
 
-	public GapJump(Context context, GameView parent) {
-		super(parent);	
+	public GapJump(Context context, GameView parent) {	
 		this.context = context;
 		this.parent = parent;
 
 		larry = new JumpLarry(context, parent, 0.1f);
 		
+		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
 		larry.setIncY(0);
 		larry.setIncX(larry.LARRY_REGSPEED);
 		
-		this.setStageBackground(R.drawable.stagebg_gapjump);
+		this.setStageBackground(BG_RES);
 	}
-
+		
 	@Override
 	public void onDrawStage(Canvas canvas) {
 		larry.drawSprite(canvas);
 	}
 
 	@Override
-	public void onSizeChanged(int w, int h, int oldw, int oldh) {	
+	public void onSizeChanged(int w, int h, int oldw, int oldh) {
 		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
 	}
 
@@ -94,15 +96,14 @@ public class GapJump extends GameStage {
 		
 		public double jump(double t, double vinit)
 		{	
-			if(parent.getHeight()*Y_GROUND+10 < getPosY()){
+			if(parent.getHeight()*Y_GROUND+5 < getPosY()){
 				jump = false;
 				setIncX(LARRY_REGSPEED);
-				setPosY(parent.getHeight()*Y_GROUND+10);
+				setPosY(parent.getHeight()*Y_GROUND+5);
 				return 0;
 			}
 			
 			return vinit + GRAVITY*t;
 		}
-		
 	}
 }
