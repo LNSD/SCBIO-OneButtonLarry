@@ -6,44 +6,64 @@ import org.scbio.onebuttonlarry.game.GameView;
 import org.scbio.onebuttonlarry.game.Larry;
 
 import android.content.Context;
+import android.graphics.Canvas;
 
 public class GapJump extends GameStage {
-	
+
 	/*
 	 * Stage map constants.
 	 */
+	private static final float Y_GROUND = 0.612f;
+
 	private Context context;
 	private GameView parent;
-	
+
 	private Larry jumpLarry;
-	
+	private int screenHeight = 0;
+	private int screenWidth = 0;
+
 	public GapJump(Context context, GameView parent) {
 		super(parent);	
 		this.context = context;
 		this.parent = parent;
-		
-		jumpLarry = new Larry(context, parent) {
-			
+
+		jumpLarry = new Larry(context, parent, 0.1f) {
+
 			@Override
 			protected void doAction() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
 		
+		jumpLarry.setIncY(0);
+		jumpLarry.setIncX(5);
+
 		this.setStageBackground(R.drawable.stagebg_gapjump);
 	}
 
 	@Override
-	protected void onTap() {
-		// TODO Auto-generated method stub
+	public void onDrawStage(Canvas canvas) {
+		jumpLarry.drawSprite(canvas);
+	}
 
+	@Override
+	public void onSizeChanged(int w, int h, int oldw, int oldh) {
+		this.screenHeight = h;
+		this.screenWidth = w;
+		
+		jumpLarry.setPosY(Y_GROUND*h);
+	}
+
+	@Override
+	protected void onTap() {
+		taps++;
 	}
 
 	@Override
 	protected void updatePhysics(double delay) {
-		// TODO Auto-generated method stub
-
+		jumpLarry.incPos(delay);
+		
+		if(jumpLarry.getPosX() > screenWidth) finishStage();
 	}
-
 }
