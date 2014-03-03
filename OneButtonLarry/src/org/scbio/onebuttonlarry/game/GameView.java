@@ -32,10 +32,12 @@ public class GameView extends View implements OnStageFinishListener{
 	 */
 	public GameView(Context context) {
 		super(context);
+		currentStage.setOnStageFinishListener(this);
 	}
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		currentStage.setOnStageFinishListener(this);
 	}
 
 	/**
@@ -51,17 +53,19 @@ public class GameView extends View implements OnStageFinishListener{
 	{
 		if(currentStage != null)
 			this.currentStage.onDrawStage(canvas);
-		
+
 		super.onDraw(canvas);
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) 
-	{
+	{	
+		super.onSizeChanged(w, h, oldw, oldh);
 		if(currentStage != null)
 			this.currentStage.onSizeChanged(w,h,oldw,oldh);
-		
-		super.onSizeChanged(w, h, oldw, oldh);
+
+		before = System.currentTimeMillis();
+		thread.start(); 
 	}
 
 	/*
@@ -78,7 +82,7 @@ public class GameView extends View implements OnStageFinishListener{
 		}
 		return super.onTouchEvent(event);	
 	}
-	
+
 	/*
 	 * On stage finished listener method.
 	 * Called when a Stage is finished in order to get number of taps performed. 
@@ -86,8 +90,8 @@ public class GameView extends View implements OnStageFinishListener{
 	@Override
 	public void onStageFinish(long taps) { // TODO Need completion
 		totalScore += taps;
-		
-		
+
+
 		nextStage.setOnStageFinishListener(this);
 		currentStage = nextStage;
 	}
@@ -115,27 +119,31 @@ public class GameView extends View implements OnStageFinishListener{
 			if(pause) resumeGameThread();
 		}
 
-		public synchronized boolean isPaused() {
+		public boolean isPaused() {
 			return pause;      
 		}
 
 		@Override
 		public void run() 
 		{	
-			try{
-				running = true;
-				while (running) 
-				{
-					updateGame();
 
-					synchronized(this) 
-					{
-						while(pause) wait();
+			running = true;
+			while (running) 
+			{
+				updateGame();
+
+				synchronized(this) 
+				{
+					while(pause){
+						try{
+							wait();
+						}catch (Exception e){
+							Log.e(GameThread.class.toString(), "GameThread run() crashes @wait()", e);
+						}
 					}
 				}
-			}catch (Exception e){
-				Log.e(GameThread.class.toString(), "GameThread run() crashes @wait()", e);
 			}
+
 		}
 
 	}
@@ -152,8 +160,9 @@ public class GameView extends View implements OnStageFinishListener{
 		// Delay calculation. For real-time.          
 		double delay = (now - before) / PROCESS_PERIOD;
 		before = now; 		
-
-		currentStage.updatePhysics(delay);
+		
+		if(delay < 5)
+			currentStage.updatePhysics(delay);
 	}
 
 	public void resumeGame(){
@@ -189,5 +198,4 @@ public class GameView extends View implements OnStageFinishListener{
 	public OnGameListener getOnGameListener() {
 		return onGameListener;
 	}
-
 }

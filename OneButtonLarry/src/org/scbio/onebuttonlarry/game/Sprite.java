@@ -55,12 +55,12 @@ public class Sprite {
 		if(posX<-width/2) {
 			posX = view.getWidth() - width/2;
 		}
-		if(posX>view.getWidth()-width/2) {posX=-width/2;}
+		//if(posX>view.getWidth()-width/2) {posX=-width/2;}
 		
 		posY+=incY * factor;
 		
 		if(posY<-height/2) {posY=view.getHeight() -height/2;}
-		if(posY>view.getHeight()-height/2) {posY=-height/2;}
+		//if(posY>view.getHeight()-height/2) {posY=-height/2;}
 	}
 	
 	public double distance (Sprite g) {

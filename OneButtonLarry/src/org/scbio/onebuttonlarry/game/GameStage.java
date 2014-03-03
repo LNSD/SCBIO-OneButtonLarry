@@ -37,9 +37,14 @@ public abstract class GameStage {
 	 */
 	protected abstract void updatePhysics(double delay);
 	
-	public abstract void onDrawStage(Canvas canvas);
+	protected abstract void onDrawStage(Canvas canvas);
 	
-	public abstract void onSizeChanged(int w, int h, int oldw, int oldh);
+	protected abstract void onSizeChanged(int w, int h, int oldw, int oldh);
+	
+	protected void finishStage(){
+		if(onStageFinishListener!=null)
+			onStageFinishListener.onStageFinish(taps);
+	}
 	
 	
 	/**
