@@ -2,6 +2,7 @@ package org.scbio.onebuttonlarry.game;
 
 import java.util.HashMap;
 
+import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
 import org.scbio.onebuttonlarry.stage.GapJump;
 
@@ -32,11 +33,17 @@ public class GameView extends View implements OnStageFinishListener{
 	 */
 	public GameView(Context context) {
 		super(context);
+		
+		currentStage = new GapJump(getContext(), this);
+		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
 	}
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		
+		currentStage = new GapJump(getContext(), this);
+		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
 	}
 
@@ -88,19 +95,27 @@ public class GameView extends View implements OnStageFinishListener{
 	 * Called when a Stage is finished in order to get number of taps performed. 
 	 */
 	@Override
-	public void onStageFinish(long taps) { // TODO Need completion
+	public void onStageFinish(long taps) { 
 		totalScore += taps;
-
-
+		
+		// TODO Need completion 
+		nextStage = new GapJump(getContext(), this);
+		
 		nextStage.setOnStageFinishListener(this);
+		parent.runOnUiThread(new Runnable()
+		{			
+			@Override
+			public void run() {
+				GameView game = (GameView) parent.findViewById(R.id.GameView);
+				game.setBackgroundResource(nextStage.getStageBackground());
+			}
+		});
 		currentStage = nextStage;
 	}
 
 	/**
 	 * Game Thread class.
-	 * 
 	 */
-
 	protected class GameThread extends Thread{
 
 		private boolean pause, running;
@@ -126,7 +141,6 @@ public class GameView extends View implements OnStageFinishListener{
 		@Override
 		public void run() 
 		{	
-
 			running = true;
 			while (running) 
 			{
@@ -143,9 +157,7 @@ public class GameView extends View implements OnStageFinishListener{
 					}
 				}
 			}
-
 		}
-
 	}
 
 	private long before = 0;

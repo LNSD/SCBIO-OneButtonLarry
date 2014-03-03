@@ -1,30 +1,15 @@
 package org.scbio.onebuttonlarry.game;
 
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 public abstract class GameStage {
 	
-	private GameView parent;
 	private OnStageFinishListener onStageFinishListener;
-	private Drawable background;
+	private int background;
 	
 	protected long taps = 0;
 
-	public GameStage(GameView parent) {
-		this.parent = parent;
-	}
-
-	@SuppressWarnings("deprecation")
-	protected void setStageBackground(int bgResId){
-		try {
-			this.background = parent.getResources().getDrawable(bgResId); 
-		} catch (Exception e) {
-			Log.e("GAMESTAGE", "Crashed at getResources() from View subclass",e);
-		}
-		parent.setBackgroundDrawable(background);
-	}
+	public GameStage(){}
 	
 	/**
 	 * Callback method. Called when Game view is touched.
@@ -62,5 +47,15 @@ public abstract class GameStage {
 	public OnStageFinishListener getOnStageFinishListener() {
 		return onStageFinishListener;
 	}
-
+	
+	/*
+	 * Background getters and setters
+	 */
+	protected void setStageBackground(int bgResId){
+		this.background = bgResId;
+	}
+	protected int getStageBackground(){
+		return this.background;
+	}
+	
 }
