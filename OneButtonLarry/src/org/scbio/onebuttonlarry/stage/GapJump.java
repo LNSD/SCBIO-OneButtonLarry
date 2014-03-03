@@ -19,8 +19,6 @@ public class GapJump extends GameStage {
 	private GameView parent;
 
 	private Larry jumpLarry;
-	private int screenHeight = 0;
-	private int screenWidth = 0;
 
 	public GapJump(Context context, GameView parent) {
 		super(parent);	
@@ -49,9 +47,7 @@ public class GapJump extends GameStage {
 
 	@Override
 	public void onSizeChanged(int w, int h, int oldw, int oldh) {
-		this.screenHeight = h;
-		this.screenWidth = w;
-		
+	
 		jumpLarry.setPosY(Y_GROUND*h);
 	}
 
@@ -63,7 +59,7 @@ public class GapJump extends GameStage {
 	@Override
 	protected void updatePhysics(double delay) {
 		jumpLarry.incPos(delay);
-		
-		if(jumpLarry.getPosX() > screenWidth) finishStage();
+
+		if(jumpLarry.getPosX() > parent.getWidth()-jumpLarry.getWidth()/2) finishStage();
 	}
 }
