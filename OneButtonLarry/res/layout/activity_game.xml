@@ -47,11 +47,12 @@
         android:layout_alignTop="@+id/buttonPause"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/buttonPause"
+        android:gravity="center_vertical"
         android:minLines="1"
-        android:text="9999"
+        android:text="0"
         android:textAlignment="textEnd"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
