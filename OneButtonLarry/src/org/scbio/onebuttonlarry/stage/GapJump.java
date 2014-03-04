@@ -15,8 +15,8 @@ public class GapJump extends GameStage {
 	 * Stage map constants.
 	 */
 	private static final int BG_RES = R.drawable.stagebg_gapjump;
-	private static final float Y_GROUND = 0.612f;
-	
+	private static final float Y_GROUND = 0.626f;
+
 	private Context context;
 	private GameView parent;
 
@@ -29,8 +29,8 @@ public class GapJump extends GameStage {
 		larry = new JumpLarry(context, parent, 0.1f);
 		
 		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
+		larry.setIncX(JumpLarry.LARRY_REGSPEED);
 		larry.setIncY(0);
-		larry.setIncX(larry.LARRY_REGSPEED);
 		
 		this.setStageBackground(BG_RES);
 	}
@@ -44,18 +44,37 @@ public class GapJump extends GameStage {
 	public void onSizeChanged(int w, int h, int oldw, int oldh) {
 		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
 	}
-
+	
+	/*
+	 * Called when user touches the GameView
+	 */
 	@Override
-	protected void onTap() {
-		taps++;
-		
+	protected void onTap() {		
 		if(!larry.isJumping()) larry.doAction();
 	}
-
+	
+	/*
+	 * Called by game update thread 
+	 */
 	@Override
 	protected void updatePhysics(double delay) {
-		if(larry.isJumping()) 
+		larry.updateLarry(delay);
+		
+		if(larry.isJumping()){ 
 			larry.setIncY(larry.jump(delay, larry.getIncY()));
+			
+			if(larry.getIncY() >= -(5+JumpLarry.LARRY_JUMPSPEEDY))
+			{
+				larry.jump = false;
+				larry.setIncY(0);
+				larry.setIncX(JumpLarry.LARRY_REGSPEED);
+				larry.setPosY(parent.getHeight()*Y_GROUND-1);
+			}
+		}
+		
+		if(!larry.isJumping() && larry.hasFallen()){
+			larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
+		}
 		
 		larry.incPos(delay);
 		if(larry.getPosX() > parent.getWidth()-larry.getWidth()/2) finishStage();
@@ -65,6 +84,14 @@ public class GapJump extends GameStage {
 		public JumpLarry(Context context, View view) {
 			super(context, view);
 		}
+		
+		public boolean hasFallen() {
+			boolean firstgap = getPosX() > 0.5*parent.getWidth();
+			boolean secondgap = false; 
+			boolean thirdgap = false;
+			return firstgap || secondgap || thirdgap;
+		}
+		
 		public JumpLarry(Context context, View view, float scale) {
 			super(context, view, scale);
 		}
@@ -74,7 +101,7 @@ public class GapJump extends GameStage {
 		 */
 		public static final int LARRY_REGSPEED = 7;
 		public static final int LARRY_JUMPSPEEDX = 15;
-		public static final int LARRY_JUMPSPEEDY = -40;
+		public static final int LARRY_JUMPSPEEDY = -45;
 		public static final float GRAVITY = 5f;
 		
 		private boolean jump = false;
@@ -95,14 +122,7 @@ public class GapJump extends GameStage {
 		}
 		
 		public double jump(double t, double vinit)
-		{	
-			if(parent.getHeight()*Y_GROUND+5 < getPosY()){
-				jump = false;
-				setIncX(LARRY_REGSPEED);
-				setPosY(parent.getHeight()*Y_GROUND+5);
-				return 0;
-			}
-			
+		{
 			return vinit + GRAVITY*t;
 		}
 	}
