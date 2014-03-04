@@ -6,8 +6,6 @@ public abstract class GameStage {
 	
 	private OnStageFinishListener onStageFinishListener;
 	private int background;
-	
-	protected long taps = 0;
 
 	public GameStage(){}
 	
@@ -28,7 +26,7 @@ public abstract class GameStage {
 	
 	protected void finishStage(){
 		if(onStageFinishListener!=null)
-			onStageFinishListener.onStageFinish(taps);
+			onStageFinishListener.onStageFinish();
 	}
 	
 	
@@ -37,7 +35,7 @@ public abstract class GameStage {
 	 * Called when game finishes.
 	 */
 	public interface OnStageFinishListener{
-		public void onStageFinish(long taps);
+		public void onStageFinish();
 	}
 
 	public void setOnStageFinishListener(OnStageFinishListener onStageFinishListener) {
