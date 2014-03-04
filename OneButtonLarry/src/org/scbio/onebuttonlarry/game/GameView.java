@@ -1,10 +1,7 @@
 package org.scbio.onebuttonlarry.game;
 
-import java.util.HashMap;
-
 import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
-import org.scbio.onebuttonlarry.stage.GapJump;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 public class GameView extends View implements OnStageFinishListener{
 
@@ -25,8 +23,7 @@ public class GameView extends View implements OnStageFinishListener{
 	private GameStage nextStage;
 	private OnGameListener onGameListener;
 
-	private HashMap<String, Long> scores = new HashMap<String, Long>();
-	private long totalScore = 0;
+	private long totalTaps = 0;
 
 	/**
 	 * GameView constructors
@@ -84,7 +81,17 @@ public class GameView extends View implements OnStageFinishListener{
 	public boolean onTouchEvent(MotionEvent event)
 	{
 		if(!thread.isPaused())
-		{
+		{	
+			totalTaps++;
+			parent.runOnUiThread(new Runnable()
+			{			
+				@Override
+				public void run() {
+					TextView tIndicator = (TextView) parent.findViewById(R.id.tapsIndicator);
+					tIndicator.setText(String.valueOf(totalTaps));
+				}
+			});
+			
 			this.currentStage.onTap();
 		}
 		return super.onTouchEvent(event);	
@@ -92,11 +99,10 @@ public class GameView extends View implements OnStageFinishListener{
 
 	/*
 	 * On stage finished listener method.
-	 * Called when a Stage is finished in order to get number of taps performed. 
+	 * Called when a Stage is finished in order to set next stage. 
 	 */
 	@Override
-	public void onStageFinish(long taps) { 
-		totalScore += taps;
+	public void onStageFinish() { 
 		
 		// TODO Need completion 
 		nextStage = new GapJump(getContext(), this);
