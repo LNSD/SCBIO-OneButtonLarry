@@ -19,7 +19,7 @@ public class GameView extends View implements OnStageFinishListener{
 	private Activity parent;
 	private GameThread thread = new GameThread();
 
-	private GameStage currentStage;
+	private GameStage currentStage = new GapJump(getContext(), this);
 	private GameStage nextStage;
 	private OnGameListener onGameListener;
 
@@ -117,6 +117,8 @@ public class GameView extends View implements OnStageFinishListener{
 			}
 		});
 		currentStage = nextStage;
+		
+		//endGame();
 	}
 
 	/**
@@ -158,7 +160,8 @@ public class GameView extends View implements OnStageFinishListener{
 						try{
 							wait();
 						}catch (Exception e){
-							Log.e(GameThread.class.toString(), "GameThread run() crashes @wait()", e);
+							Log.e(GameThread.class.toString(), 
+									"GameThread run() crashes @wait()", e);
 						}
 					}
 				}
@@ -196,8 +199,12 @@ public class GameView extends View implements OnStageFinishListener{
 
 	public void finishGame(){
 		this.thread.finishGameThread();
+	}
+	
+	public void endGame(){
+		finishGame();
 		if(onGameListener != null) 
-			this.onGameListener.onGameFinish();
+			this.onGameListener.onGameEnd(totalTaps);
 	}
 
 	/**
@@ -206,7 +213,7 @@ public class GameView extends View implements OnStageFinishListener{
 	 */
 	public interface OnGameListener{
 		public void onGamePause();
-		public void onGameFinish();
+		public void onGameEnd(long taps);
 	}
 
 	public void setOnGameListener(OnGameListener onGameListener) {

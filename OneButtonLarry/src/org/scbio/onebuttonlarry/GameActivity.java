@@ -15,7 +15,6 @@ public class GameActivity extends Activity  implements OnGameListener{
 
 	private GameView game;
 	private ImageView pause;
-	private Button pauseButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,6 @@ public class GameActivity extends Activity  implements OnGameListener{
 		setContentView(R.layout.activity_game);
 		
 		pause = (ImageView) findViewById(R.id.bigResumeIcon);
-		pauseButton = (Button) findViewById(R.id.buttonPause);
 		game = (GameView) findViewById(R.id.GameView);
 		game.setParent(this);
 		game.setOnGameListener(this);
@@ -44,7 +42,6 @@ public class GameActivity extends Activity  implements OnGameListener{
 		game.finishGame();
 	}
 
-
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -54,32 +51,27 @@ public class GameActivity extends Activity  implements OnGameListener{
 
 	@Override
 	public void onBackPressed() {
-		
 		game.finishGame();
-		
-		Intent returnIntent = new Intent();
-		returnIntent.putExtra("score", 100l);
-		setResult(RESULT_OK, returnIntent);
-		finish();
 		super.onBackPressed();
 	}
 	
 	public void onClickPause(View v){
 		game.pauseGame();
 		pause.setVisibility(View.VISIBLE);
-		pauseButton.setVisibility(View.GONE);
 	}
 	
 	public void onClickResume(View v){
 		game.resumeGame();
 		pause.setVisibility(View.GONE);
-		pauseButton.setVisibility(View.VISIBLE);
 	}
 
-
 	@Override
-	public void onGameFinish() {
+	public void onGameEnd(long taps) {
 		
+		Intent returnIntent = new Intent();
+		returnIntent.putExtra("score", taps);
+		setResult(RESULT_OK, returnIntent);
+		finish();
 	}
 
 
