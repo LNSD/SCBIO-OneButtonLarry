@@ -62,12 +62,12 @@ public class GapJump extends GameStage {
 		if(larry.isJumping()){ 
 			larry.setIncY(larry.jump(delay, larry.getIncY()));
 			
-			if(larry.getIncY() >= -(2+JumpLarry.LARRY_JUMPSPEEDY))
+			if(larry.getIncY() >= -(5+JumpLarry.LARRY_JUMPSPEEDY))
 			{
 				larry.jump = false;
 				larry.setIncY(0);
 				larry.setIncX(JumpLarry.LARRY_REGSPEED);
-				larry.setPosY(parent.getHeight()*Y_GROUND);
+				larry.setPosY(parent.getHeight()*Y_GROUND-1);
 			}
 		}
 		
@@ -131,7 +131,7 @@ public class GapJump extends GameStage {
 			boolean secondgap = (getPosX() > 0.26*parent.getWidth() && getPosX() < 0.43*parent.getWidth()); 
 			boolean thirdgap = (getPosX() > 0.52*parent.getWidth() && getPosX() < 0.68*parent.getWidth());
 			boolean fourthgap = (getPosX() > 0.76*parent.getWidth() && getPosX() < 0.81*parent.getWidth());
-			boolean result = (firstgap || secondgap || thirdgap || fourthgap) && jump;
+			boolean result = (firstgap || secondgap || thirdgap || fourthgap) && !jump;
 			
 			if(result && parent.areGameSoundEffectsEnabled()) mSoundPool.play(deathSound, 1, 1, 1, 0, 1);
 			return result;
