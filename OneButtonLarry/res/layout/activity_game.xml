@@ -61,7 +61,7 @@
         android:minLines="1"
         android:text="@string/score_string"
         android:textAlignment="textEnd"
-        android:textColor="@color/larry-yellow"
+        android:textColor="@color/larry_yellow"
         android:textSize="30sp"
         android:textStyle="bold" />
 

@@ -7,6 +7,8 @@ import org.scbio.onebuttonlarry.game.Larry;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.View;
 
 public class GapJump extends GameStage {
@@ -21,12 +23,19 @@ public class GapJump extends GameStage {
 	private GameView parent;
 
 	private JumpLarry larry;
+	
+	SoundPool soundPool;
+	int soundJump;
+	int soundDead;
 
 	public GapJump(Context context, GameView parent) {	
 		this.context = context;
 		this.parent = parent;
 
 		larry = new JumpLarry(context, parent, 0.1f);
+		soundPool = new SoundPool( 5, AudioManager.STREAM_MUSIC , 0);
+		soundJump = soundPool.load(context, R.raw.jumpsound, 0);
+		soundDead = soundPool.load(context, R.raw.deadsound, 0);
 		
 		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
 		larry.setIncX(JumpLarry.LARRY_REGSPEED);
@@ -74,6 +83,7 @@ public class GapJump extends GameStage {
 		
 		if(!larry.isJumping() && larry.hasFallen()){
 			larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
+			soundPool.play(soundDead, 1, 1, 1, 0, 1);
 		}
 		
 		larry.incPos(delay);
@@ -86,10 +96,11 @@ public class GapJump extends GameStage {
 		}
 		
 		public boolean hasFallen() {
-			boolean firstgap = getPosX() > 0.5*parent.getWidth();
-			boolean secondgap = false; 
-			boolean thirdgap = false;
-			return firstgap || secondgap || thirdgap;
+			boolean firstgap = (getPosX() > 0.11*parent.getWidth() && getPosX() < 0.18*parent.getWidth());
+			boolean secondgap = (getPosX() > 0.26*parent.getWidth() && getPosX() < 0.43*parent.getWidth()); 
+			boolean thirdgap = (getPosX() > 0.52*parent.getWidth() && getPosX() < 0.68*parent.getWidth());
+			boolean fourthgap = (getPosX() > 0.76*parent.getWidth() && getPosX() < 0.81*parent.getWidth());
+			return firstgap || secondgap || thirdgap || fourthgap;
 		}
 		
 		public JumpLarry(Context context, View view, float scale) {
@@ -99,7 +110,7 @@ public class GapJump extends GameStage {
 		/*
 		 * Larry constants.
 		 */
-		public static final int LARRY_REGSPEED = 7;
+		public static final int LARRY_REGSPEED = 6;
 		public static final int LARRY_JUMPSPEEDX = 15;
 		public static final int LARRY_JUMPSPEEDY = -45;
 		public static final float GRAVITY = 5f;
@@ -117,6 +128,7 @@ public class GapJump extends GameStage {
 		@Override
 		protected void doAction() {
 			jump = true;
+			soundPool.play(soundJump, 1, 1, 1, 0, 1);
 			setIncY(LARRY_JUMPSPEEDY);
 			setIncX(LARRY_JUMPSPEEDX);
 		}

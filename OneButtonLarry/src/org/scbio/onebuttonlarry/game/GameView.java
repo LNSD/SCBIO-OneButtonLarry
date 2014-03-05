@@ -2,6 +2,7 @@ package org.scbio.onebuttonlarry.game;
 
 import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
+import org.scbio.onebuttonlarry.stage.GapJump;
 
 import android.app.Activity;
 import android.content.Context;
@@ -101,10 +102,18 @@ public class GameView extends View implements OnStageFinishListener{
 	 * On stage finished listener method.
 	 * Called when a Stage is finished in order to set next stage. 
 	 */
+	boolean a = false;
 	@Override
 	public void onStageFinish() { 
-		if(true) endGame();
-		else{
+		if(a) 
+			endGame();
+		else
+			setNextStage();
+		a = true;
+	}
+
+	private void setNextStage() {
+		{
 			// TODO Need completion 
 			nextStage = new GapJump(getContext(), this);
 
