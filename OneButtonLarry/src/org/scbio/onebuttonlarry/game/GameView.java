@@ -30,7 +30,7 @@ public class GameView extends View implements OnStageFinishListener{
 	 */
 	public GameView(Context context) {
 		super(context);
-
+		
 		currentStage = new GapJump(getContext(), this);
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
@@ -38,7 +38,7 @@ public class GameView extends View implements OnStageFinishListener{
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-
+		
 		currentStage = new GapJump(getContext(), this);
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
@@ -91,7 +91,7 @@ public class GameView extends View implements OnStageFinishListener{
 					tIndicator.setText(String.valueOf(totalTaps));
 				}
 			});
-
+			
 			this.currentStage.onTap();
 		}
 		return super.onTouchEvent(event);	
@@ -181,7 +181,7 @@ public class GameView extends View implements OnStageFinishListener{
 		// Delay calculation. For real-time.          
 		double delay = (now - before) / PROCESS_PERIOD;
 		before = now; 		
-
+		
 		if(delay < 5)
 			currentStage.updatePhysics(delay);
 	}
@@ -200,7 +200,7 @@ public class GameView extends View implements OnStageFinishListener{
 	public void finishGame(){
 		this.thread.finishGameThread();
 	}
-
+	
 	public void endGame(){
 		finishGame();
 		if(onGameListener != null) 

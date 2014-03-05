@@ -38,20 +38,30 @@
         android:onClick="onClickPause"
         android:text="" />
 
+    <ToggleButton
+        android:id="@+id/toggleButtonMusic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/toggle_button_sound"
+        android:checked="true"
+        android:textOff=""
+        android:textOn="" />
+    
     <TextView
         android:id="@+id/tapsIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/buttonPause"
-        android:layout_alignParentTop="false"
-        android:layout_alignTop="@+id/buttonPause"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@+id/buttonPause"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="15dp"
         android:gravity="center_vertical"
         android:minLines="1"
-        android:text="0"
+        android:text="@string/score_string"
         android:textAlignment="textEnd"
-        android:textColor="@android:color/white"
+        android:textColor="@color/larry-yellow"
         android:textSize="30sp"
         android:textStyle="bold" />
 

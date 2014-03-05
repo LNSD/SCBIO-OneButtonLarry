@@ -10,8 +10,8 @@ import android.view.View;
 public abstract class Larry extends Sprite {
 	
 	private static final int CPERFRAME = 5;
-	private static final int MAXCOUNT = 6*CPERFRAME;
-	private int count = 1;
+	private static final int MAXCOUNT = 4*CPERFRAME;
+	private int count = 0;
 	
 	// Resource names
 	private static final int LARRY_FRAME_1 = R.drawable.larry1;
@@ -50,15 +50,13 @@ public abstract class Larry extends Sprite {
 	public void updateLarry(double delay)
 	{
 		switch (count/CPERFRAME) {
-		case 5:
 		case 0:
 			setDrawable(larryFrame1);
 			break;
-		case 4:
+		case 3:
 		case 1:
 			setDrawable(larryFrame2);
 			break;
-		case 3:
 		case 2:
 			setDrawable(larryFrame3);
 			break;	
@@ -68,7 +66,7 @@ public abstract class Larry extends Sprite {
 		}
 		
 		count += delay;
-		if(count> MAXCOUNT) count = 1;
+		if(count> MAXCOUNT) count = 0;
 	}
 	
 	protected abstract void doAction();
