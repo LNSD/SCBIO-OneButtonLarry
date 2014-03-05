@@ -62,7 +62,7 @@ public class GapJump extends GameStage {
 		if(larry.isJumping()){ 
 			larry.setIncY(larry.jump(delay, larry.getIncY()));
 			
-			if(larry.getIncY() >= -(5+JumpLarry.LARRY_JUMPSPEEDY))
+			if(larry.getIncY() >= -(JumpLarry.LARRY_JUMPSPEEDY))
 			{
 				larry.jump = false;
 				larry.setIncY(0);

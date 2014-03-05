@@ -1,10 +1,9 @@
 package org.scbio.onebuttonlarry;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,10 +11,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
-public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreDialogListener {
+public class MainActivity extends Activity {
 
 	private static final String TAG = "MainActivity";
-	
+
 	ToggleButton toggleSound;
 	ImageView dancingLarry;
 	ImageView waitingLarry;
@@ -57,31 +56,47 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
+		switch (requestCode) 
+		{
 		case 100:
 			if (resultCode==RESULT_OK) 
 			{
-				ScoreDialog mScoreDialog = new ScoreDialog();
-				mScoreDialog.setScore(data.getExtras().getLong("score"));
-				mScoreDialog.show(getSupportFragmentManager(), "score");
+				Intent mIntent = new Intent(getApplicationContext(), ResultActivity.class);
+				mIntent.putExtras(data.getExtras());
+				startActivityForResult(mIntent, 200);
 			}else{
-				Log.e(TAG, "Unknown 'resultCode' response: "+resultCode);
+				Log.w(TAG, "Unknown 'resultCode' response: "+resultCode);
 			}
 			break;
+			
+		case 200:
+			if (resultCode==RESULT_OK) 
+			{
+				String player = data.getExtras().getString("player");
+				long score = data.getExtras().getLong("score");
+				if(HighscoreManager.updateHighscores(getBaseContext(), new Highscore(player, score)))
+				{
+					Log.i(TAG, "Highscore stored successfully. Player:"+player.toString()+"/Score:"+score);
+				}
+			}else{
+				Log.w(TAG, "Unknown 'resultCode' response: "+resultCode);
+			}
+			break;
+			
 		default:
-			Log.e(TAG, "Unknown 'requestCode' response: "+requestCode);
+			Log.w(TAG, "Unknown 'requestCode' response: "+requestCode);
 			break;
 		}		
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		boolean musicState = PreferencesManager.loadMusicPreference(getBaseContext());
 		if(musicState)
 			MusicManager.start(getApplicationContext(), R.raw.gamemusic);
-		
+
 		toggleSound.setChecked(musicState);
 	}
 
@@ -91,7 +106,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		swapLarryAnimation(toggleSound.isChecked());
 		MusicManager.resume();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -104,14 +119,6 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		MusicManager.release();
 	}
 
-	@Override
-	public void onDialogSubmitClick(DialogFragment dialog, CharSequence player, long score) 
-	{
-		if(HighscoreManager.updateHighscores(getBaseContext(), new Highscore(player.toString(), score))){
-			Log.i(TAG, "Highscore stored successfully. Player:"+player.toString()+"/Score:"+score);
-		}
-	}
-
 	public void onClickGame(View v) {
 		Intent gameIntent = new Intent(getBaseContext(), GameActivity.class);
 		startActivityForResult(gameIntent, 100);
@@ -121,7 +128,7 @@ public class MainActivity extends FragmentActivity implements ScoreDialog.ScoreD
 		Intent aboutUs = new Intent(this, AboutActivity.class);
 		startActivity(aboutUs);
 	}
-	
+
 	public void onClickHighscore(View view){
 		Intent highScore = new Intent(this, HighscoreActivity.class);
 		startActivity(highScore);

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="dummy_string"></string>
-	<string name="score_string">0</string>
-    
+
+    <string name="dummy_string"></string>
+    <string name="score_string">0</string>
+
     <!-- Main activity -->
     <string name="app_name">One Button Larry</string>
     <string name="action_settings">Settings</string>
@@ -13,16 +14,17 @@
     <string name="about_us">About Us</string>
     <string name="title_activity_high_score">Your High Score is:</string>
     <string name="title_activity_game">GameActivity</string>
-    
-    <!-- Score dialog -->
-    <string name="title_score_dialog">Tu puntuación:</string>
-    <string name="namein_score_dialog">Introduce tu nombre:</string>
-    <string name="puntuacion_score_dialog">Tu puntuación:</string>
+
+    <!-- Result activity -->
+    <string name="title_activity_result">Your score:</string>
+    <string name="namein_score_dialog">Insert your nickname:</string>
+    <string name="puntuacion_score_dialog">Your score:</string>
     <string name="def_puntuacion_score_dialog">0000</string>
+    <string name="edittext_player_hinttext">NONAME</string>
     <string name="submit_score_dialog">Submit</string>
 
     <!-- About Us -->
-    <string name="about_text">"Esta apliación ha sido desarrollada por Ossorio, Carlos y Llorens.</string>
+    <string name="about_text">"BlahBlahBla Ossorio, Llorens y Charly.</string>
     <string name="title_activity_about">About Us</string>
-    
+
 </resources>

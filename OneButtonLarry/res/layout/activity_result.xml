@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15dp" >
-	
+    android:layout_margin="15dp"
+    android:orientation="vertical" >
+
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="@string/namein_score_dialog"
@@ -16,19 +16,17 @@
 
     <EditText
         android:id="@+id/scorenameEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:ems="5"
-        android:inputType="textCapWords" >
-
-        <requestFocus />
-    </EditText>
+        android:hint="@string/edittext_player_hinttext"
+        android:inputType="textCapWords" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:padding="5dp"
         android:text="@string/puntuacion_score_dialog"
         android:textColor="@android:color/white"
@@ -36,14 +34,22 @@
 
     <TextView
         android:id="@+id/scoreTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom ="5dp"
         android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:paddingBottom="5dp"
         android:text="@string/def_puntuacion_score_dialog"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
         android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_score_dialog" />
 
 </LinearLayout>
