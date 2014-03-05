@@ -29,6 +29,7 @@ public class GameActivity extends Activity  implements OnGameListener{
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
 			{
 				PreferencesManager.storeMusicPreference(getBaseContext(), isChecked);
+				game.setGameSoundEffectsState(isChecked);
 				if(isChecked)
 					MusicManager.start(getApplicationContext(), R.raw.gamemusic);
 				else

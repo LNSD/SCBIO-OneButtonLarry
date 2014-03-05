@@ -12,12 +12,14 @@ public abstract class Larry extends Sprite {
 	private static final int CPERFRAME = 5;
 	private static final int MAXCOUNT = 4*CPERFRAME;
 	private int count = 0;
-	
+
 	// Resource names
 	private static final int LARRY_FRAME_1 = R.drawable.larry1;
 	private static final int LARRY_FRAME_2 = R.drawable.larry2;
 	private static final int LARRY_FRAME_3 = R.drawable.larry3;
 	private static final int LARRY_FRAME_4 = R.drawable.larry4;
+	public static final int LARRY_SOUND_JUMP = R.raw.jumpsound;
+	public static final int LARRY_SOUND_DIE = R.raw.deathsound;
 	
 	// Frame drawable
 	private static Drawable larryFrame1;
