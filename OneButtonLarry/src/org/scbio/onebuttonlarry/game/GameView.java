@@ -1,7 +1,9 @@
 package org.scbio.onebuttonlarry.game;
 
+import org.scbio.onebuttonlarry.PreferencesManager;
 import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
+import org.scbio.onebuttonlarry.stage.GapJump;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +20,7 @@ public class GameView extends View implements OnStageFinishListener{
 
 	private Activity parent;
 	private GameThread thread = new GameThread();
+	private boolean gameSoundEffects = true;
 
 	private GameStage currentStage;
 	private GameStage nextStage;
@@ -31,6 +34,7 @@ public class GameView extends View implements OnStageFinishListener{
 	public GameView(Context context) {
 		super(context);
 		
+		setGameSoundEffectsState(PreferencesManager.loadMusicPreference(context));
 		currentStage = new GapJump(getContext(), this);
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
@@ -39,6 +43,7 @@ public class GameView extends View implements OnStageFinishListener{
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		
+		setGameSoundEffectsState(PreferencesManager.loadMusicPreference(context));
 		currentStage = new GapJump(getContext(), this);
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
@@ -50,6 +55,14 @@ public class GameView extends View implements OnStageFinishListener{
 	 */
 	public void setParent(Activity parent) {
 		this.parent = parent;
+	}
+	
+	public boolean areGameSoundEffectsEnabled() {
+		return gameSoundEffects;
+	}
+
+	public void setGameSoundEffectsState(boolean gameSoundEffects) {
+		this.gameSoundEffects = gameSoundEffects;
 	}
 
 	@Override
@@ -101,10 +114,18 @@ public class GameView extends View implements OnStageFinishListener{
 	 * On stage finished listener method.
 	 * Called when a Stage is finished in order to set next stage. 
 	 */
+	boolean a = false;
 	@Override
 	public void onStageFinish() { 
-		if(true) endGame();
-		else{
+		if(a) 
+			endGame();
+		else
+			setNextStage();
+		a = true;
+	}
+
+	private void setNextStage() {
+		{
 			// TODO Need completion 
 			nextStage = new GapJump(getContext(), this);
 
