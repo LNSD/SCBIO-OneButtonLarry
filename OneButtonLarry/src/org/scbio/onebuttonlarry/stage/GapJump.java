@@ -111,8 +111,8 @@ public class GapJump extends GameStage {
 		 * Larry constants.
 		 */
 		public static final int LARRY_REGSPEED = 6;
-		public static final int LARRY_JUMPSPEEDX = 15;
 		public static final int LARRY_JUMPSPEEDY = -45;
+		public static final float LARRY_JUMPSPEEDX = 0.01171875f;
 		public static final float GRAVITY = 5f;
 		
 		private boolean jump = false;
@@ -130,7 +130,7 @@ public class GapJump extends GameStage {
 			jump = true;
 			soundPool.play(soundJump, 1, 1, 1, 0, 1);
 			setIncY(LARRY_JUMPSPEEDY);
-			setIncX(LARRY_JUMPSPEEDX);
+			setIncX(LARRY_JUMPSPEEDX*parent.getWidth());
 		}
 		
 		public double jump(double t, double vinit)
