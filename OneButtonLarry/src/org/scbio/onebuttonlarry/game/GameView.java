@@ -1,10 +1,14 @@
 package org.scbio.onebuttonlarry.game;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import org.scbio.onebuttonlarry.PreferencesManager;
 import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
 import org.scbio.onebuttonlarry.stage.GapJumpStage;
 import org.scbio.onebuttonlarry.stage.PlatformsStage;
+import org.scbio.onebuttonlarry.stage.RunStopStage;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,10 +22,12 @@ import android.widget.TextView;
 public class GameView extends View implements OnStageFinishListener{
 
 	private static final int PROCESS_PERIOD = 50;
+	private static final int TOTAL_RANDSTAGES = 2;
 
 	private Activity parent;
 	private GameThread thread = new GameThread();
 	private boolean gameSoundEffects = true;
+	private ArrayList<Integer> stagesPlayed = new ArrayList<Integer>();
 
 	private GameStage currentStage;
 	private GameStage nextStage;
@@ -34,18 +40,20 @@ public class GameView extends View implements OnStageFinishListener{
 	 */
 	public GameView(Context context) {
 		super(context);
-		
+
 		setGameSoundEffectsState(PreferencesManager.loadMusicPreference(context));
 		currentStage = new PlatformsStage(getContext(), this);
+
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
 	}
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		
+
 		setGameSoundEffectsState(PreferencesManager.loadMusicPreference(context));
 		currentStage = new PlatformsStage(getContext(), this);
+
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
 	}
@@ -57,7 +65,7 @@ public class GameView extends View implements OnStageFinishListener{
 	public void setParent(Activity parent) {
 		this.parent = parent;
 	}
-	
+
 	public boolean areGameSoundEffectsEnabled() {
 		return gameSoundEffects;
 	}
@@ -105,7 +113,7 @@ public class GameView extends View implements OnStageFinishListener{
 					tIndicator.setText(String.valueOf(totalTaps));
 				}
 			});
-			
+
 			this.currentStage.onTap();
 		}
 		return super.onTouchEvent(event);	
@@ -115,32 +123,43 @@ public class GameView extends View implements OnStageFinishListener{
 	 * On stage finished listener method.
 	 * Called when a Stage is finished in order to set next stage. 
 	 */
-	boolean a = false;
 	@Override
 	public void onStageFinish() { 
-		if(a) 
-			endGame();
-		else
+		if(stagesPlayed.size()>TOTAL_RANDSTAGES-1) endGame();
+		else{
+			int randomNum;
+			do{
+				Random rand = new Random();
+				randomNum = rand.nextInt(TOTAL_RANDSTAGES) + 2;
+			}while(stagesPlayed.indexOf(randomNum)>0);
+
+			switch (randomNum) {
+			case 2:
+				nextStage = new GapJumpStage(getContext(), this);
+				break;
+			case 3:
+				nextStage = new RunStopStage(getContext(), this);
+				break;
+			default:
+				break;
+			}
+
+			stagesPlayed.add(randomNum);
 			setNextStage();
-		a = true;
+		}
 	}
 
 	private void setNextStage() {
-		{
-			// TODO Need completion 
-			nextStage = new GapJumpStage(getContext(), this);
-
-			nextStage.setOnStageFinishListener(this);
-			parent.runOnUiThread(new Runnable()
-			{			
-				@Override
-				public void run() {
-					GameView game = (GameView) parent.findViewById(R.id.GameView);
-					game.setBackgroundResource(nextStage.getStageBackground());
-				}
-			});
-			currentStage = nextStage;
-		}
+		nextStage.setOnStageFinishListener(this);
+		parent.runOnUiThread(new Runnable()
+		{			
+			@Override
+			public void run() {
+				GameView game = (GameView) parent.findViewById(R.id.GameView);
+				game.setBackgroundResource(nextStage.getStageBackground());
+			}
+		});
+		currentStage = nextStage;
 	}
 
 	/**
@@ -203,7 +222,7 @@ public class GameView extends View implements OnStageFinishListener{
 		// Delay calculation. For real-time.          
 		double delay = (now - before) / PROCESS_PERIOD;
 		before = now; 		
-		
+
 		if(delay < 5)
 			currentStage.updatePhysics(delay);
 	}
@@ -222,7 +241,7 @@ public class GameView extends View implements OnStageFinishListener{
 	public void finishGame(){
 		this.thread.finishGameThread();
 	}
-	
+
 	public void endGame(){
 		finishGame();
 		if(onGameListener != null) 
