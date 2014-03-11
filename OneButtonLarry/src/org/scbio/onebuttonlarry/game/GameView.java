@@ -3,8 +3,8 @@ package org.scbio.onebuttonlarry.game;
 import org.scbio.onebuttonlarry.PreferencesManager;
 import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
-import org.scbio.onebuttonlarry.stage.GapJump;
-import org.scbio.onebuttonlarry.stage.StartStop;
+import org.scbio.onebuttonlarry.stage.PlatformsStage;
+import org.scbio.onebuttonlarry.stage.RunStopStage;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,7 +36,7 @@ public class GameView extends View implements OnStageFinishListener{
 		super(context);
 		
 		setGameSoundEffectsState(PreferencesManager.loadMusicPreference(context));
-		currentStage = new GapJump(getContext(), this);
+		currentStage = new PlatformsStage(getContext(), this);
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
 	}
@@ -45,7 +45,7 @@ public class GameView extends View implements OnStageFinishListener{
 		super(context, attrs);
 		
 		setGameSoundEffectsState(PreferencesManager.loadMusicPreference(context));
-		currentStage = new GapJump(getContext(), this);
+		currentStage = new PlatformsStage(getContext(), this);
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
 	}
@@ -128,7 +128,7 @@ public class GameView extends View implements OnStageFinishListener{
 	private void setNextStage() {
 		{
 			// TODO Need completion 
-			nextStage = new StartStop(getContext(), this);
+			nextStage = new RunStopStage(getContext(), this);
 
 			nextStage.setOnStageFinishListener(this);
 			parent.runOnUiThread(new Runnable()

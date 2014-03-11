@@ -11,26 +11,23 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.view.View;
 
-public class GapJump extends GameStage {
+public class PlatformsStage extends GameStage {
 
 	/*
 	 * Stage map constants.
 	 */
-	private static final int BG_RES = R.drawable.stagebg_gapjump;
+	private static final int BG_RES = R.drawable.stagebg_platforms;
 	private static final float Y_GROUND = 0.626f;
 	
 	private GameView parent;
 	private JumpLarry larry;
 
-	public GapJump(Context context, GameView parent) {	
+	public PlatformsStage(Context context, GameView parent) {	
 		this.parent = parent;
 
 		larry = new JumpLarry(context, parent, 0.1f);
 		
-		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
-		larry.setIncX(JumpLarry.LARRY_REGSPEED);
-		larry.setIncY(0);
-		
+		restartStage();		
 		this.setStageBackground(BG_RES);
 	}
 		
@@ -41,7 +38,7 @@ public class GapJump extends GameStage {
 
 	@Override
 	public void onSizeChanged(int w, int h, int oldw, int oldh) {
-		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
+		restartStage();
 	}
 	
 	/*
@@ -71,12 +68,17 @@ public class GapJump extends GameStage {
 			}
 		}
 		
-		if(larry.hasFallen()){
-			larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
-		}
+		if(larry.hasFallen()) restartStage();
 		
 		larry.incPos(delay);
 		if(larry.getPosX() > parent.getWidth()-larry.getWidth()/2) finishStage();
+	}
+	
+	@Override
+	protected void restartStage(){
+		larry.setPos(-larry.getWidth()/2, Y_GROUND*parent.getHeight());
+		larry.setIncX(JumpLarry.LARRY_REGSPEED);
+		larry.setIncY(0);
 	}
 	
 	private class JumpLarry extends Larry{

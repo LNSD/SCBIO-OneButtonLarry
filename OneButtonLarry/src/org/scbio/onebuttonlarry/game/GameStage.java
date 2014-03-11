@@ -24,6 +24,8 @@ public abstract class GameStage {
 	
 	protected abstract void onSizeChanged(int w, int h, int oldw, int oldh);
 	
+	protected abstract void restartStage();
+	
 	protected void finishStage(){
 		if(onStageFinishListener!=null)
 			onStageFinishListener.onStageFinish();
