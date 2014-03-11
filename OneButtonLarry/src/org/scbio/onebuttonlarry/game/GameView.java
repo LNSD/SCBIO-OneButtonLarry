@@ -3,8 +3,8 @@ package org.scbio.onebuttonlarry.game;
 import org.scbio.onebuttonlarry.PreferencesManager;
 import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
+import org.scbio.onebuttonlarry.stage.GapJumpStage;
 import org.scbio.onebuttonlarry.stage.PlatformsStage;
-import org.scbio.onebuttonlarry.stage.RunStopStage;
 
 import android.app.Activity;
 import android.content.Context;
@@ -128,7 +128,7 @@ public class GameView extends View implements OnStageFinishListener{
 	private void setNextStage() {
 		{
 			// TODO Need completion 
-			nextStage = new RunStopStage(getContext(), this);
+			nextStage = new GapJumpStage(getContext(), this);
 
 			nextStage.setOnStageFinishListener(this);
 			parent.runOnUiThread(new Runnable()
