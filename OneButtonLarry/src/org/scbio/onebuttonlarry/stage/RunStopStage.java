@@ -155,7 +155,7 @@ public class RunStopStage extends GameStage {
 			this.setIncX(StopLarry.LARRY_REGSPEED);
 		}
 		
-		protected void killed(){
+		protected void kill(){
 			if(parent.areGameSoundEffectsEnabled()) 
 				mSoundPool.play(deathSound, 1, 1, 1, 0, 1);
 		}
@@ -168,7 +168,7 @@ public class RunStopStage extends GameStage {
 		private static final int ARROW = R.drawable.arrow;
 
 		public static final double ARROW_FALLSPEEDY = 21;
-		public static final float LARRY_POXIMITY = 0.218f;
+		private static final float ARROW_PROX = 0.06f;
 
 		private boolean fall = false;
 
@@ -194,15 +194,16 @@ public class RunStopStage extends GameStage {
 				if(this.getPosY() > Y_GROUND*parent.getHeight()+this.getHeight()) {
 					this.fall = false;
 				}else if(this.distance(larry) < this.getWidth()){
+					larry.kill();
 					restartStage();
-					larry.killed();
 				}
 			}
 		}
 		
 		public void startFalling(StopLarry larry)
 		{	
-			if(this.distance(larry) < Arrow.LARRY_POXIMITY*parent.getWidth()){
+			float distX = (float) (this.getPosX() - larry.getPosX())/parent.getWidth();
+			if(distX < Arrow.ARROW_PROX){
 				this.fall = true;
 				this.setIncY(Arrow.ARROW_FALLSPEEDY);
 			}
