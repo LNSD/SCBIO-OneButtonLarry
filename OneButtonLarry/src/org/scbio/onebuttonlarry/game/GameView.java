@@ -8,6 +8,7 @@ import org.scbio.onebuttonlarry.R;
 import org.scbio.onebuttonlarry.game.GameStage.OnStageFinishListener;
 import org.scbio.onebuttonlarry.stage.GapJumpStage;
 import org.scbio.onebuttonlarry.stage.PlatformsStage;
+import org.scbio.onebuttonlarry.stage.RockStage;
 import org.scbio.onebuttonlarry.stage.RunStopStage;
 
 import android.app.Activity;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 public class GameView extends View implements OnStageFinishListener{
 
 	private static final int PROCESS_PERIOD = 50;
-	private static final int TOTAL_RANDSTAGES = 2;
+	private static final int TOTAL_RANDSTAGES = 3;
 
 	private Activity parent;
 	private GameThread thread = new GameThread();
@@ -140,6 +141,8 @@ public class GameView extends View implements OnStageFinishListener{
 			case 3:
 				nextStage = new RunStopStage(getContext(), this);
 				break;
+			case 4:
+				nextStage = new RockStage(getContext(), this);
 			default:
 				break;
 			}
