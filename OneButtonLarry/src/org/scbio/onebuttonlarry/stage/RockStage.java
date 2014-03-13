@@ -18,28 +18,18 @@ public class RockStage extends GameStage {
 	 * Stage map constants.
 	 */
 	private static final int BG_RES = R.drawable.stagebg_runstop;
-	private static final float Y_GROUND = 0.626f;
-	private static final float S_GROUND = 0.51f;
+	private static final float LARRY_GROUND_Y = 0.626f;
+	private static final float STONE_GROUND_Y = 0.51f;
 
-	
 	private GameView parent;
 	private RunLarry larry;
-	private Stone stone;
-	
+	private Rock stone;
 
 	public RockStage(Context context, GameView parent) {	
 		this.parent = parent;
 
 		larry = new RunLarry(context, parent, 0.1f);
-		this.stone = new Stone(context, parent, 1f);
-		
-		larry.setPos(stone.getWidth() + larry.getWidth(), Y_GROUND*parent.getHeight());
-		larry.setIncX(RunLarry.LARRY_STARTSPEED); 
-		larry.setIncY(0);
-		stone.setPos(-stone.getWidth()/10, S_GROUND*parent.getHeight());
-		stone.setIncX(Stone.STONE_SPEED);
-		stone.setIncY(0);
-		
+		this.stone = new Rock(context, parent);		
 		
 		this.setStageBackground(BG_RES);
 	}
@@ -52,9 +42,7 @@ public class RockStage extends GameStage {
 
 	@Override
 	public void onSizeChanged(int w, int h, int oldw, int oldh) {
-		larry.setPos(stone.getWidth() + larry.getWidth(), Y_GROUND*parent.getHeight());
-		stone.setPos(-stone.getWidth()/2, S_GROUND*parent.getHeight());
-		
+		restartStage();
 	}
 	
 	/*
@@ -62,7 +50,7 @@ public class RockStage extends GameStage {
 	 */
 	@Override
 	protected void onTap() {		
-		larry.doAction();
+		larry.doAction(); // Accelerate Larry
 	}
 	
 	/*
@@ -72,35 +60,42 @@ public class RockStage extends GameStage {
 	@Override
 	protected void updatePhysics(double delay) {
 		larry.updateLarry(delay);
+		stone.updateRock();
+
 		
-		stone.setIncX(stone.getIncX()+0.05d);
-		
-		if(larry.distance(stone) < 150) killState();
+		if(larry.distance(stone) < Rock.KILL_DISTN*parent.getWidth())
+		{
+			larry.kill();
+			restartStage();
+		}
 		
 		larry.incPos(delay);
 		stone.incPos(delay);
 		
 		if(larry.getPosX() > parent.getWidth()-larry.getWidth()/2) finishStage();
 	}
-
-	private void killState(){
-
-		larry.isKilled();
-		stone.setPos(-stone.getWidth()/10, S_GROUND*parent.getHeight());
-		larry.setPos(stone.getWidth() + larry.getWidth(), Y_GROUND*parent.getHeight());
-		larry.setIncX(RunLarry.LARRY_STARTSPEED); 
-		stone.setIncX(Stone.STONE_SPEED);
-
+	
+	@Override
+	protected void restartStage() 
+	{
+		larry.setPos(stone.getWidth() + larry.getWidth(), LARRY_GROUND_Y*parent.getHeight());
+		larry.setIncX(RunLarry.LARRY_STARTSPEED*parent.getWidth()); 
+		larry.setIncY(0);
+		
+		stone.setPos(-stone.getWidth()/10, STONE_GROUND_Y*parent.getHeight());
+		stone.setIncX(Rock.ROCK_SPEED*parent.getWidth());
+		stone.setIncY(0);
 	}
 
-	
+
 	private class RunLarry extends Larry{
 		
 		/*
 		 * Larry constants.
 		 */
-		public static final int LARRY_STARTSPEED = 3;
-		public static final int LARRY_MAXVEL = 11;
+		public static final float LARRY_STARTSPEED = 0.00234f;
+		public static final float LARRY_MAXVEL = 0.0086f;
+		public static final float LARRY_ACCEL = 0.0004f;
 		private SoundPool mSoundPool;
 				
 		private int deathSound;
@@ -109,41 +104,41 @@ public class RockStage extends GameStage {
 			super(context, view, scale);
 			mSoundPool = new SoundPool(2, AudioManager.STREAM_MUSIC , 0);
 			deathSound = mSoundPool.load(context, LARRY_SOUND_DIE, 1);
-			
 		}
 		
+		/*
+		 * Accelerate Larry
+		 */
 		@Override
-		protected void doAction() {
-			if(this.getIncX() < RunLarry.LARRY_MAXVEL){
-				this.setIncX(this.getIncX()+ 0.5d);
+		protected void doAction() { 
+			if(this.getIncX() < RunLarry.LARRY_MAXVEL*parent.getWidth()){
+				this.setIncX(this.getIncX()+ parent.getWidth()*LARRY_ACCEL);
 			}
 		}
 		
-		protected void isKilled(){
+		protected void kill(){
 			if(parent.areGameSoundEffectsEnabled()) mSoundPool.play(deathSound, 1, 1, 1, 0, 1);
 		}
-		
 	}
 
 
-	@Override
-	protected void restartStage() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public class Stone extends Sprite {
-		public static final double STONE_SPEED = 7;
+	public class Rock extends Sprite {
+		public static final float ROCK_SPEED = 0.0055f;
+		public static final float ROCK_ACCEL = 0.00004f;
+		public static final float KILL_DISTN = 0.117f;
 
 		// Resource names
-		private static final int STONE_FRAME_1 = R.drawable.stone;
+		private static final int STONE_SPRITE = R.drawable.stone;
 		
-		public Stone(Context context, View view, float scale) {
-			super(view, context.getResources().getDrawable(STONE_FRAME_1), scale);
+		public Rock(Context context, View view) {
+			super(view, context.getResources().getDrawable(STONE_SPRITE));
+		}
+		public Rock(Context context, View view, float scale) {
+			super(view, context.getResources().getDrawable(STONE_SPRITE), scale);
 		}
 		
-		public void updateStone(double delay){
-			//TODO Blah rotate stone
+		public void updateRock(){
+			stone.setIncX(stone.getIncX() + ROCK_ACCEL*parent.getWidth());
 		}
 		
 	}
