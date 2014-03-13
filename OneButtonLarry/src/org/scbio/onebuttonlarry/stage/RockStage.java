@@ -31,6 +31,8 @@ public class RockStage extends GameStage {
 		larry = new RunLarry(context, parent, 0.1f);
 		this.stone = new Rock(context, parent);		
 		
+		restartStage();
+		
 		this.setStageBackground(BG_RES);
 	}
 		
