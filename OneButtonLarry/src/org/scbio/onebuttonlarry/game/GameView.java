@@ -28,7 +28,7 @@ public class GameView extends View implements OnStageFinishListener{
 	private Activity parent;
 	private GameThread thread = new GameThread();
 	private boolean gameSoundEffects = true;
-	private ArrayList<Integer> stagesPlayed = new ArrayList<Integer>();
+	private ArrayList<String> stagesPlayed = new ArrayList<String>(TOTAL_RANDSTAGES);
 
 	private GameStage currentStage;
 	private GameStage nextStage;
@@ -126,29 +126,28 @@ public class GameView extends View implements OnStageFinishListener{
 	 */
 	@Override
 	public void onStageFinish() { 
-		if(stagesPlayed.size()>TOTAL_RANDSTAGES-1) endGame();
-		else{
-			int randomNum;
-			do{
-				Random rand = new Random();
-				randomNum = rand.nextInt(TOTAL_RANDSTAGES) + 2;
-			}while(stagesPlayed.indexOf(randomNum)>0);
+		if(stagesPlayed.size()<TOTAL_RANDSTAGES)
+		{
+			Random rand = new Random();
+			do{			
+				switch (rand.nextInt(TOTAL_RANDSTAGES)) {
+				case 0:
+					nextStage = new GapJumpStage(getContext(), this);
+					break;
+				case 1:
+					nextStage = new RunStopStage(getContext(), this);
+					break;
+				default:
+				case 2:
+					nextStage = new RockStage(getContext(), this);
+					break;
+				}
+			}while(stagesPlayed.indexOf(nextStage.getClass().toString())>=0);
 
-			switch (randomNum) {
-			case 2:
-				nextStage = new GapJumpStage(getContext(), this);
-				break;
-			case 3:
-				nextStage = new RunStopStage(getContext(), this);
-				break;
-			case 4:
-				nextStage = new RockStage(getContext(), this);
-			default:
-				break;
-			}
-
-			stagesPlayed.add(randomNum);
+			stagesPlayed.add(nextStage.getClass().toString());
 			setNextStage();
+		}else{
+			endGame();
 		}
 	}
 

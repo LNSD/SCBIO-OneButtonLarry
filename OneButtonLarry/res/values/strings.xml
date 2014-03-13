@@ -24,7 +24,7 @@
     <string name="submit_score_dialog">Submit</string>
 
     <!-- About Us -->
-    <string name="about_text">"BlahBlahBla Ossorio, Llorens y Charly.</string>
+    <string name="about_text">"Game created by Javier Ossorio, Lorenzo Delgado y Carlos Molina, for SCBIO. ETSIT UPV 2014</string>
     <string name="title_activity_about">About Us</string>
 
 </resources>

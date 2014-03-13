@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:contentDescription="@string/sound"
-        android:src="@drawable/larry_waiting_animation"
+        android:background="@drawable/larry_waiting_animation"
         android:visibility="gone" />
 
     <ImageView
@@ -24,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:contentDescription="@string/sound"
-        android:src="@drawable/larry_dance_animation"
+        android:background="@drawable/larry_dance_animation"
         android:visibility="visible" />
 
     <ImageView
