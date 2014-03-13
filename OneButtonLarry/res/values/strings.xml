@@ -3,6 +3,7 @@
 
     <string name="dummy_string"></string>
     <string name="score_string">0</string>
+    <string name="ad_unit_id">ca-app-pub-4851983510692337/1193728808</string>
 
     <!-- Main activity -->
     <string name="app_name">One Button Larry</string>

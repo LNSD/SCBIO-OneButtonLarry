@@ -12,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.ads.*;
+
 public class GameActivity extends Activity  implements OnGameListener{
 
 	private GameView game;
@@ -41,6 +43,10 @@ public class GameActivity extends Activity  implements OnGameListener{
 		game = (GameView) findViewById(R.id.GameView);
 		game.setParent(this);
 		game.setOnGameListener(this);
+		
+	    AdView adView = (AdView)this.findViewById(R.id.adView);
+	    AdRequest adRequest = new AdRequest.Builder().build();
+	    adView.loadAd(adRequest);
 	}
 
 	@Override
