@@ -2,6 +2,7 @@ package org.scbio.onebuttonlarry;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -103,8 +104,26 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		final AnimationDrawable anim;
+		
 		swapLarryAnimation(toggleSound.isChecked());
 		MusicManager.resume();
+		
+		if(toggleSound.isChecked()){
+			anim = (AnimationDrawable) dancingLarry.getBackground();
+			dancingLarry.post(new Runnable() {
+			    public void run() {
+			        if ( anim != null ) anim.start();
+			      }
+			});
+		}else{
+			anim = (AnimationDrawable) waitingLarry.getBackground();
+			waitingLarry.post(new Runnable() {
+			    public void run() {
+			        if ( anim != null ) anim.start();
+			      }
+			});
+		}
 	}
 
 	@Override

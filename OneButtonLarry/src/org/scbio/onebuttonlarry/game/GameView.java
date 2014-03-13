@@ -43,7 +43,7 @@ public class GameView extends View implements OnStageFinishListener{
 		super(context);
 
 		setGameSoundEffectsState(PreferencesManager.loadMusicPreference(context));
-		currentStage = new PlatformsStage(getContext(), this);
+		currentStage = new GapJumpStage(getContext(), this);
 
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
@@ -53,7 +53,7 @@ public class GameView extends View implements OnStageFinishListener{
 		super(context, attrs);
 
 		setGameSoundEffectsState(PreferencesManager.loadMusicPreference(context));
-		currentStage = new PlatformsStage(getContext(), this);
+		currentStage = new GapJumpStage(getContext(), this);
 
 		this.setBackgroundResource(currentStage.getStageBackground());
 		currentStage.setOnStageFinishListener(this);
@@ -132,7 +132,7 @@ public class GameView extends View implements OnStageFinishListener{
 			do{			
 				switch (rand.nextInt(TOTAL_RANDSTAGES)) {
 				case 0:
-					nextStage = new GapJumpStage(getContext(), this);
+					nextStage = new PlatformsStage(getContext(), this);
 					break;
 				case 1:
 					nextStage = new RunStopStage(getContext(), this);
